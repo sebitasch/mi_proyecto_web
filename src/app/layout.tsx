@@ -19,6 +19,31 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: [
+    "Sebastian Cardona",
+    "Senior Web UI Developer",
+    "desarrollador frontend",
+    "frontend developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "microfrontends",
+    "Module Federation",
+    "arquitectura BFF",
+    "desarrollador web Bogotá",
+    "portafolio",
+  ],
+  authors: [{ name: siteConfig.fullName, url: siteConfig.url }],
+  creator: siteConfig.fullName,
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
 };
 
 export default function RootLayout({

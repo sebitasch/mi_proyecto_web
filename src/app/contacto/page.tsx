@@ -1,33 +1,65 @@
 import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/Button";
-import { siteConfig } from "@/config/site";
-import { contactDetails, contactIntro } from "@/data/contact";
+import { TechIcon } from "@/components/ui/TechIcon";
+import { siteConfig, socialLinks } from "@/config/site";
+import { contactBody, contactDetails, contactHeadline } from "@/data/contact";
 
 export const metadata: Metadata = {
   title: "Contacto",
 };
 
-export default function ContactoPage() {
-  const email = siteConfig.links.email.replace("mailto:", "");
+const emailLink = socialLinks.find((link) => link.platform === "email");
+const otherLinks = socialLinks.filter((link) => link.platform !== "email");
 
+export default function ContactoPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
-      <h1 className="text-2xl font-semibold text-foreground">Contacto</h1>
+      <h1 className="text-2xl font-semibold leading-tight text-foreground sm:text-[30px]">
+        {contactHeadline}
+      </h1>
 
-      <p className="mt-4 max-w-xl leading-relaxed text-muted">{contactIntro}</p>
-
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button href={siteConfig.links.email}>Escríbeme por email</Button>
-        <Button
-          href={siteConfig.links.github}
-          variant="outline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Ver GitHub
-        </Button>
+      <div className="mt-6 flex flex-col gap-4">
+        {contactBody.map((paragraph) => (
+          <p key={paragraph} className="leading-relaxed text-muted">
+            {paragraph}
+          </p>
+        ))}
       </div>
+
+      {emailLink && (
+        <div className="mt-10">
+          <Button
+            href={emailLink.href}
+            size="lg"
+            aria-label={emailLink.ariaLabel}
+          >
+            {emailLink.path && (
+              <TechIcon path={emailLink.path} className="h-5 w-5" />
+            )}
+            {siteConfig.email}
+          </Button>
+        </div>
+      )}
+
+      <ul className="mt-4 flex flex-wrap gap-3">
+        {otherLinks.map((link) => (
+          <li key={link.platform}>
+            <Button
+              href={link.href}
+              variant="outline"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.ariaLabel}
+            >
+              {/* LinkedIn no tiene icono en simpleicons: se omite el svg y la
+                  etiqueta visible sostiene el boton por si sola. */}
+              {link.path && <TechIcon path={link.path} className="h-4 w-4" />}
+              {link.label}
+            </Button>
+          </li>
+        ))}
+      </ul>
 
       <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-5 rounded-xl border border-border-subtle p-6 sm:grid-cols-2">
         {contactDetails.map((detail) => (
@@ -39,17 +71,6 @@ export default function ContactoPage() {
           </div>
         ))}
       </dl>
-
-      <p className="mt-8 text-sm text-muted">
-        También puedes escribirme directamente a{" "}
-        <a
-          href={siteConfig.links.email}
-          className="text-accent underline underline-offset-4 transition-colors hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          {email}
-        </a>
-        .
-      </p>
     </div>
   );
 }
