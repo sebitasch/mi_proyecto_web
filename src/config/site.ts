@@ -4,8 +4,7 @@ export const siteConfig = {
   description: "Portafolio personal: proyectos, experiencia y contacto.",
   url: "https://mi-portafolio-sigma-self.vercel.app/",
   links: {
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/sebitasch",
     email: "mailto:sebastianch9510@gmail.com",
   },
   nav: [

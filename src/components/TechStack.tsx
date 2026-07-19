@@ -31,11 +31,37 @@ function groupByCategory(items: Tech[]): Record<TechCategory, Tech[]> {
   );
 }
 
-export function TechStack() {
+const ITEM_CLASSES = "group flex items-center gap-2";
+const ICON_CLASSES =
+  "h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-accent";
+const NAME_CLASSES = "text-sm text-muted transition-colors group-hover:text-accent";
+
+interface TechStackProps {
+  /**
+   * `full` agrupa por categoria con encabezados; `compact` es una fila plana
+   * sin agrupar, para resumir el stack sin repetir la vista de /sobre-mi.
+   */
+  variant?: "full" | "compact";
+}
+
+export function TechStack({ variant = "full" }: TechStackProps) {
+  if (variant === "compact") {
+    return (
+      <ul className="flex flex-wrap gap-x-6 gap-y-3">
+        {stack.map((tech) => (
+          <li key={tech.slug} className={ITEM_CLASSES}>
+            <TechIcon path={tech.path} className={ICON_CLASSES} />
+            <span className={NAME_CLASSES}>{tech.name}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   const grouped = groupByCategory(stack);
 
   return (
-    <section>
+    <div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {CATEGORY_ORDER.filter((category) => grouped[category].length > 0).map(
           (category) => (
@@ -45,14 +71,9 @@ export function TechStack() {
               </h2>
               <ul className="flex flex-col gap-2">
                 {grouped[category].map((tech) => (
-                  <li key={tech.slug} className="group flex items-center gap-2">
-                    <TechIcon
-                      path={tech.path}
-                      className="h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-accent"
-                    />
-                    <span className="text-sm text-muted transition-colors group-hover:text-accent">
-                      {tech.name}
-                    </span>
+                  <li key={tech.slug} className={ITEM_CLASSES}>
+                    <TechIcon path={tech.path} className={ICON_CLASSES} />
+                    <span className={NAME_CLASSES}>{tech.name}</span>
                   </li>
                 ))}
               </ul>
@@ -60,6 +81,6 @@ export function TechStack() {
           ),
         )}
       </div>
-    </section>
+    </div>
   );
 }
