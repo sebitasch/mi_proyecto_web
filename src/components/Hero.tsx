@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { Pill } from "@/components/ui/Pill";
 
 const STACK = ["React", "Next.js", "TypeScript"] as const;
 
@@ -25,29 +26,19 @@ export function Hero() {
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Link
-          href="#proyectos"
-          className="inline-flex items-center justify-center rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
+        <Button href="#proyectos" variant="solid">
           Ver proyectos
-        </Link>
-        <Link
-          href=""
-          aria-label="Descargar CV"
-          className="inline-flex items-center justify-center rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
+        </Button>
+        <Button href="" variant="outline" aria-label="Descargar CV">
           Descargar CV
-        </Link>
+        </Button>
       </div>
 
       <ul className="mt-8 flex flex-wrap gap-2" aria-label="Stack principal">
         {STACK.map((tech) => (
-          <li
-            key={tech}
-            className="rounded-lg bg-accent-soft px-3 py-1 text-sm font-medium text-accent"
-          >
+          <Pill key={tech} as="li">
             {tech}
-          </li>
+          </Pill>
         ))}
       </ul>
     </section>
