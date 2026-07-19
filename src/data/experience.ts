@@ -1,44 +1,52 @@
 import type { Experience } from "@/types";
 
 /* -------------------------------------------------------------------------
- * ⚠️  CONTENIDO PLACEHOLDER — NO PUBLICAR
+ * Sin fechas de forma deliberada: el detalle temporal vive en el CV.
  *
- * Las 3 entradas de abajo son ficticias. Existen solo para maquetar y probar
- * el timeline con datos de forma realista. Reemplaza cada entrada por
- * experiencia real antes de desplegar.
- *
- * La entrada más reciente lleva `confidential: true`: describe solo tipos de
- * tarea y skills, sin nombre de empresa, arquitectura interna ni datos de
- * cliente (ver nota de privacidad en CLAUDE.md).
+ * ⚠️  Los nombres de cliente (`clients`) son visibles públicamente. Verifica
+ * tu NDA con la consultora antes de desplegar: nombrar al cliente final es
+ * habitual en LinkedIn, pero algunos contratos lo restringen.
  * ---------------------------------------------------------------------- */
 
 export const experience: Experience[] = [
   {
-    company: "",
-    role: "Frontend / Fullstack Developer",
-    startDate: "2024-03",
-    endDate: null,
+    company: "Globant",
+    role: "Senior Web UI Developer",
     summary:
-      "Desarrollo de features en arquitectura de microfrontends, diseño de endpoints BFF y consumo de APIs REST, con pruebas unitarias en Vitest.",
-    stack: ["React", "Next.js", "TypeScript", "Node.js"],
-    confidential: true,
+      "Desarrollo de aplicaciones web escalables, optimizadas y seguras para clientes internacionales y productos internos, colaborando dentro de equipos de más de 500 desarrolladores.",
+    highlights: [
+      "Implementación de arquitecturas de microfrontends con Module Federation, acotando componentes para que cada equipo despliegue de forma independiente.",
+      "Trabajo sobre sistemas monolíticos y de microservicios, migrando capacidades hacia límites más mantenibles sin detener la entrega.",
+      "Observabilidad en producción con Datadog y Splunk para diagnosticar incidencias sobre datos reales y no sobre suposiciones.",
+      "Integración de IA en el ciclo de desarrollo: GitHub Copilot, LLMs, MCPs y desarrollo guiado por especificación.",
+    ],
+    clients: ["Disney", "British Airways"],
+    stack: [
+      "Next.js",
+      "React 18+",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind",
+      "Node.js",
+      "Microfrontends",
+      "Module Federation",
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Jenkins",
+      "Datadog",
+      "Splunk",
+    ],
   },
   {
-    company: "Nimbus Retail",
-    role: "Frontend Developer",
-    startDate: "2022-06",
-    endDate: "2024-02",
+    company: "Great Place To Work®",
+    role: "Web Developer",
     summary:
-      "Construcción de un catálogo de producto en Next.js y migración progresiva de un sitio legacy con feature flags, coordinando releases con el equipo de backend.",
-    stack: ["Next.js", "TypeScript", "Tailwind"],
-  },
-  {
-    company: "Estudio Craft",
-    role: "Frontend Developer Jr.",
-    startDate: "2020-09",
-    endDate: "2022-05",
-    summary:
-      "Maquetación y desarrollo de sitios a medida para clientes pequeños, integrando formularios con APIs de terceros y optimizando rendimiento.",
-    stack: ["React", "JavaScript", "CSS"],
+      "Desarrollo de sitios interactivos, SPAs y landing pages para impulso de marca y eventos profesionales.",
+    highlights: [
+      "Maquetación responsive con foco en tiempos de carga y compatibilidad entre navegadores.",
+      "Publicación y versionado mediante pipelines de CI/CD.",
+    ],
+    stack: ["HTML5", "CSS3", "JavaScript", "Git", "GitHub", "CI/CD"],
   },
 ];

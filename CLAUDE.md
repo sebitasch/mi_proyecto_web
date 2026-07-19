@@ -65,7 +65,15 @@ generic.
   unless I explicitly ask.
 
 ## Privacy note (important)
-My current job is confidential. In portfolio copy I can describe skills and types
-of task (REST API design, refactoring, unit testing with Vitest) and link to the
-product's public site, but NEVER expose proprietary code, detailed internal
-architecture, or client data.
+Employer and client names are NOT sensitive: they are references, and naming them
+is standard practice on a CV or LinkedIn. Globant, Great Place To Work®, Disney
+and British Airways can appear in portfolio copy.
+
+What must NEVER be exposed: proprietary code, detailed internal architecture,
+internal URLs or dashboards, and any client data beyond the client's name.
+Describe skills and types of task (microfrontends, BFF patterns, REST API design,
+observability with Datadog/Splunk) and link only to public product sites.
+
+The `confidential` flag on `Experience` still exists and works: set it to `true`
+if a future role is under an NDA that does restrict naming. When set, the UI
+omits both the company name and its clients, and neither reaches the HTML.

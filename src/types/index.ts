@@ -1,8 +1,10 @@
 export type TechCategory =
   | "frontend"
   | "lenguaje"
-  | "herramienta"
-  | "cloud"
+  | "backend"
+  | "testing"
+  | "devops"
+  | "observabilidad"
   | "ia";
 
 export interface Tech {
@@ -32,19 +34,35 @@ export interface Project {
 export interface Experience {
   company: string;
   role: string;
-  /** Formato ISO corto: "YYYY-MM". */
-  startDate: string;
-  /** `null` cuando es el puesto actual. */
-  endDate: string | null;
   summary: string;
+  /** Responsabilidades o logros concretos, en frases cortas. */
+  highlights: string[];
   stack: string[];
+  /** Clientes finales atendidos desde esa empresa. */
+  clients?: string[];
   /** Sitio público del producto, nunca recursos internos. */
   url?: string;
   /**
-   * Marca puestos bajo confidencialidad: la UI debe omitir el nombre de la
-   * empresa y limitarse a describir tipos de tarea y skills.
+   * Marca puestos bajo confidencialidad: la UI omite el nombre de la empresa
+   * y se limita a describir tipos de tarea y skills.
    */
   confidential?: boolean;
+}
+
+export type SocialPlatform = "email" | "linkedin" | "github" | "instagram";
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  label: string;
+  /** Texto accesible: describe el destino, no solo la marca. */
+  ariaLabel: string;
+  href: string;
+  /** Slug de simpleicons.org. */
+  slug: string;
+  /** Atributo `d` del SVG, sobre un viewBox de 24x24. */
+  path: string;
+  /** Se muestra también en el footer. */
+  inFooter: boolean;
 }
 
 export interface NavItem {
