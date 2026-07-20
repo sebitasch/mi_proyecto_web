@@ -2,7 +2,7 @@ import { ContactCta } from "@/components/ContactCta";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { FreelanceProjects } from "@/components/FreelanceProjects";
 import { Hero } from "@/components/Hero";
-import { CursorField } from "@/components/motion/CursorField";
+import { HeroAmbience } from "@/components/motion/HeroAmbience";
 import { TechStack } from "@/components/TechStack";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -17,11 +17,9 @@ export default async function HomePage({
 
   return (
     <>
-      {/* CursorField es cliente, pero <Hero /> se le pasa como children ya
-          renderizado en servidor: no se convierte en Client Component. */}
-      <CursorField>
+      <HeroAmbience>
         <Hero />
-      </CursorField>
+      </HeroAmbience>
 
       {/* Freelance primero y destacado, en adelanto: solo los marcados como
           featured. Si no hay ninguno no renderiza nada. */}

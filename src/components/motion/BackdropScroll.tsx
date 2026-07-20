@@ -8,9 +8,8 @@ import { useEffect } from "react";
  * No renderiza nada: el fondo decorativo se dibuja en servidor y solo lee la
  * variable desde CSS. Asi los 28 iconos no viajan al bundle de cliente.
  *
- * Cero re-renders y un solo frame pendiente a la vez, igual que CursorField.
- * A diferencia de aquel, aqui NO se descarta el puntero grueso: el efecto es
- * de scroll y en movil se scrollea igual (o mas).
+ * Cero re-renders y un solo frame pendiente a la vez. NO se descarta el
+ * puntero grueso: el efecto es de scroll y en movil se scrollea igual (o mas).
  */
 export function BackdropScroll() {
   useEffect(() => {
