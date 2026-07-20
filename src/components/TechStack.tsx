@@ -58,10 +58,13 @@ function groupByCategory(items: Tech[]): Record<TechCategory, Tech[]> {
   }, empty);
 }
 
-const ITEM_CLASSES = "group flex items-center gap-2";
+/* `min-w-0` + `truncate` en el nombre: en una columna estrecha "Anthropic
+   Claude" desbordaria la celda y romperia la rejilla. */
+const ITEM_CLASSES = "group flex min-w-0 items-center gap-2";
 const ICON_CLASSES =
   "h-5 w-5 shrink-0 text-muted transition-colors duration-[var(--dur-1)] ease-out-soft group-hover:text-accent";
-const NAME_CLASSES = "text-sm text-muted transition-colors duration-[var(--dur-1)] ease-out-soft group-hover:text-accent";
+const NAME_CLASSES =
+  "truncate text-sm text-muted transition-colors duration-[var(--dur-1)] ease-out-soft group-hover:text-accent";
 
 interface TechStackProps {
   /**
@@ -75,8 +78,11 @@ export async function TechStack({ variant = "full" }: TechStackProps) {
   const t = await getTranslations("about");
   const tc = await getTranslations("techCategories");
   if (variant === "compact") {
+    /* Rejilla y no `flex-wrap`: con 28 items de ancho desigual, envolver deja
+       una o dos entradas por fila en movil y se lee como una lista vertical
+       larguisima. En columnas fijas cada fila aprovecha el ancho completo. */
     return (
-      <ul className="flex flex-wrap gap-x-6 gap-y-3">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
         {stack.map((tech) => (
           <li key={tech.slug} className={ITEM_CLASSES}>
             <TechIcon id={tech.slug} className={ICON_CLASSES} />
@@ -104,7 +110,10 @@ export async function TechStack({ variant = "full" }: TechStackProps) {
                 <CategoryIcon className="h-4 w-4 text-accent" aria-hidden="true" />
                 {tc(category)}
               </h3>
-              <ul className="flex flex-col gap-2">
+              {/* Dos columnas solo en movil: ahi las categorias se apilan una
+                  tras otra y en una sola columna la pagina se alarga de mas.
+                  Desde `sm` las propias categorias ya van en rejilla. */}
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:flex-col">
                 {grouped[category].map((tech) => (
                   <li key={tech.slug} className={ITEM_CLASSES}>
                     <TechIcon id={tech.slug} className={ICON_CLASSES} />

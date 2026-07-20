@@ -1,6 +1,7 @@
 import { ArrowRight, SquareCode, BadgeCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/HeroBackdrop";
 import { Pill } from "@/components/ui/Pill";
 import { siteConfig } from "@/config/site";
 import { heroCodeLine } from "@/data/about";
@@ -20,19 +21,7 @@ export async function Hero() {
       aria-labelledby="hero-title"
       className="relative mx-auto max-w-5xl px-6 py-20 sm:py-28"
     >
-      {/* React logo watermark background */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="pointer-events-none absolute -right-6 top-4 -z-10 hidden h-56 w-56 text-accent/5 sm:block sm:h-72 sm:w-72 lg:h-96 lg:w-96"
-        style={{
-          transform:
-            "translate3d(calc((var(--mx, .5) - .5) * -16px), calc((var(--my, .5) - .5) * -16px), 0)",
-        }}
-      >
-        <use href="/icons.svg#react" />
-      </svg>
+      <HeroBackdrop />
 
       {/* role label */}
       <p
