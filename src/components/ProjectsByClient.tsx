@@ -1,15 +1,18 @@
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/motion/Reveal";
-import { projects } from "@/data/projects";
+import { getProjects } from "@/data";
+import type { Project } from "@/types";
+import type { Locale } from "@/i18n/routing";
+import { getLocale, getTranslations } from "next-intl/server";
 
 interface ClientGroup {
   client: string;
   latestYear: number;
-  projects: typeof projects;
+  projects: Project[];
 }
 
-function groupByClient(): ClientGroup[] {
-  const corporateProjects = projects.filter(
+function groupByClient(locale: Locale): ClientGroup[] {
+  const corporateProjects = getProjects(locale).filter(
     (project) => project.kind === "corporativo",
   );
 
@@ -42,13 +45,15 @@ function groupByClient(): ClientGroup[] {
   );
 }
 
-export function ProjectsByClient() {
-  const groups = groupByClient();
+export async function ProjectsByClient() {
+  const t = await getTranslations("projects");
+  const locale = (await getLocale()) as Locale;
+  const groups = groupByClient(locale);
 
   if (groups.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-border-subtle p-10 text-center">
-        <p className="text-sm text-muted">Próximamente</p>
+        <p className="text-sm text-muted">{t("comingSoon")}</p>
       </div>
     );
   }
@@ -62,9 +67,7 @@ export function ProjectsByClient() {
               {group.client}
             </h3>
             <span className="text-sm text-muted">
-              {group.projects.length === 1
-                ? "1 proyecto"
-                : `${group.projects.length} proyectos`}
+              {t("projectCount", { count: group.projects.length })}
             </span>
           </div>
 

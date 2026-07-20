@@ -22,11 +22,13 @@ export const siteConfig = {
       "https://www.linkedin.com/in/sebastian-cardona-hernandez-2a4394381/",
     instagram: "https://www.instagram.com/sebascph",
   },
+  // `key` indexa el namespace `nav` de los mensajes; la etiqueta visible
+  // se resuelve en el componente segun el idioma activo.
   nav: [
-    { label: "Inicio", href: "/" },
-    { label: "Proyectos", href: "/proyectos" },
-    { label: "Sobre mí", href: "/sobre-mi" },
-    { label: "Contacto", href: "/contacto" },
+    { key: "inicio", href: "/" },
+    { key: "proyectos", href: "/proyectos" },
+    { key: "sobreMi", href: "/sobre-mi" },
+    { key: "contacto", href: "/contacto" },
   ],
 } as const;
 

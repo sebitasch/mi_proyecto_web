@@ -4,13 +4,22 @@ import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/Button";
 import { TechIcon } from "@/components/ui/TechIcon";
 import { siteConfig, socialLinks } from "@/config/site";
-import { contactBody, contactDetails, contactHeadline } from "@/data/contact";
+import { contactBody, contactDetails, contactHeadline, contactSubjectOptions } from "@/data/contact";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Contacto",
 };
 
-export default function ContactoPage() {
+export default async function ContactoPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const tf = await getTranslations("contactForm");
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
       <h1 className="text-2xl font-semibold leading-tight text-foreground sm:text-[30px]">
@@ -25,8 +34,39 @@ export default function ContactoPage() {
         ))}
       </div>
 
+      {/*
+        La copy se resuelve aqui, en el servidor, y baja como prop. Se probo
+        con NextIntlClientProvider acotado y useTranslations dentro del form:
+        costaba ~11 kB de JS en TODAS las rutas, porque el provider del layout
+        pasa a incluir el formateador ICU. Para 15 strings no compensa.
+      */}
       <div className="mt-10">
-        <ContactForm />
+        <ContactForm
+          locale={locale}
+          copy={{
+            heading: tf("heading"),
+            requiredNote: tf("requiredNote"),
+            submitIdle: tf("submitIdle"),
+            submitPending: tf("submitPending"),
+            success: tf("success"),
+            successReset: tf("successReset"),
+            error: tf("error"),
+            fieldRequired: tf("fieldRequired"),
+            emailInvalid: tf("emailInvalid"),
+            labels: {
+              name: tf("labels.name"),
+              email: tf("labels.email"),
+              subject: tf("labels.subject"),
+              message: tf("labels.message"),
+            },
+            subjects: Object.fromEntries(
+              contactSubjectOptions.map((option) => [
+                option.id,
+                tf(`subjects.${option.id}`),
+              ]),
+            ),
+          }}
+        />
       </div>
 
       <ul className="mt-8 flex flex-wrap gap-3">

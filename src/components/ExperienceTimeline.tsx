@@ -1,21 +1,25 @@
-import { experience } from "@/data/experience";
+import { getExperience } from "@/data";
 import { Reveal } from "@/components/motion/Reveal";
 import { Pill } from "@/components/ui/Pill";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 
-export function ExperienceTimeline() {
+export async function ExperienceTimeline() {
+  const t = await getTranslations("about");
+  const locale = (await getLocale()) as Locale;
   return (
     <ol className="flex flex-col gap-10">
       {/* La key NO debe contener `company`: React serializa las keys en el
           payload RSC incrustado en el HTML, asi que un puesto confidencial
           filtraria el nombre por codigo fuente aunque nunca se renderice. */}
-      {experience.map((entry, index) => (
-        <Reveal as="li" key={`${entry.role}-${index}`} index={index}>
+      {getExperience(locale).map((entry, index) => (
+        <Reveal as="li" key={entry.id} index={index}>
           <h3 className="text-base font-semibold text-foreground">
             {entry.role}
           </h3>
 
           <p className="mt-0.5 text-sm text-muted">
-            {entry.confidential ? "Empresa confidencial" : entry.company}
+            {entry.confidential ? t("confidentialCompany") : entry.company}
           </p>
 
           <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -39,7 +43,7 @@ export function ExperienceTimeline() {
               filtraria datos de cliente y puede delatar a la propia empresa. */}
           {!entry.confidential && entry.clients && entry.clients.length > 0 && (
             <p className="mt-3 text-sm text-muted">
-              <span className="font-medium text-foreground">Clientes:</span>{" "}
+              <span className="font-medium text-foreground">{t("clients")}</span>{" "}
               {entry.clients.join(" · ")}
             </p>
           )}

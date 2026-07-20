@@ -16,11 +16,32 @@ export interface Tech {
 
 export type ProjectKind = "corporativo" | "freelance";
 
-export interface Project {
+/* -------------------------------------------------------------------------
+ * Los tipos se parten en `Base` (invariante entre idiomas) y `Content`
+ * (traducible). El objetivo es que sea IMPOSIBLE traducir por error un slug,
+ * una ruta de imagen, un nombre de cliente o una tecnología: si aparecen en
+ * un archivo de contenido localizado, TypeScript falla por exceso de
+ * propiedades.
+ * ---------------------------------------------------------------------- */
+
+/** Datos de proyecto que NO cambian con el idioma. */
+export interface ProjectBase {
   slug: string;
   kind: ProjectKind;
-  /** Cliente final. En corporativo, el cliente de Globant. */
+  /** Cliente final. En corporativo, el cliente de Globant. Nombre propio. */
   client: string;
+  /** Nombres de tecnología: no se traducen. */
+  tags: string[];
+  year: number;
+  /** Ruta a la portada en /public/projects. Deriva del slug. */
+  image: string;
+  /** Solo freelance: enlace al sitio publicado. */
+  url?: string;
+  featured: boolean;
+}
+
+/** Prosa de proyecto, una versión por idioma. */
+export interface ProjectContent {
   title: string;
   description: string;
   /** Situación de partida: qué problema existía antes. */
@@ -32,32 +53,41 @@ export interface Project {
    * hay cifras reales medidas, añádelas aquí.
    */
   impact: string[];
-  tags: string[];
-  year: number;
-  /** Ruta a la portada en /public/projects. */
-  image: string;
-  /** Solo freelance: enlace al sitio publicado. */
-  url?: string;
-  featured: boolean;
 }
 
-export interface Experience {
+/** Proyecto ya resuelto para un idioma concreto: lo que consume la UI. */
+export type Project = ProjectBase & ProjectContent;
+
+/** Datos de experiencia que NO cambian con el idioma. */
+export interface ExperienceBase {
+  /**
+   * Identificador estable. NO se deriva del rol: `role` se traduce, y una key
+   * de React que cambia entre idiomas provoca remontajes innecesarios.
+   */
+  id: string;
   company: string;
-  role: string;
-  summary: string;
-  /** Responsabilidades o logros concretos, en frases cortas. */
-  highlights: string[];
+  /** Nombres de tecnología: no se traducen. */
   stack: string[];
-  /** Clientes finales atendidos desde esa empresa. */
+  /** Clientes finales atendidos desde esa empresa. Nombres propios. */
   clients?: string[];
   /** Sitio público del producto, nunca recursos internos. */
   url?: string;
   /**
    * Marca puestos bajo confidencialidad: la UI omite el nombre de la empresa
-   * y se limita a describir tipos de tarea y skills.
+   * y sus clientes, y ninguno de los dos llega al HTML.
    */
   confidential?: boolean;
 }
+
+/** Prosa de experiencia, una versión por idioma. */
+export interface ExperienceContent {
+  role: string;
+  summary: string;
+  /** Responsabilidades o logros concretos, en frases cortas. */
+  highlights: string[];
+}
+
+export type Experience = ExperienceBase & ExperienceContent;
 
 export type SocialPlatform = "email" | "linkedin" | "github" | "instagram";
 
@@ -78,7 +108,15 @@ export interface SocialLink {
   inFooter: boolean;
 }
 
+/**
+ * Rutas internas declaradas en `src/i18n/routing.ts`. Tipar `href` con esta
+ * union hace que un enlace a una ruta inexistente sea un error de compilacion
+ * y no un 404 en produccion.
+ */
+export type AppPathname = "/" | "/proyectos" | "/sobre-mi" | "/contacto";
+
 export interface NavItem {
-  label: string;
-  href: string;
+  /** Clave de traduccion de la etiqueta, en el namespace `nav`. */
+  key: string;
+  href: AppPathname;
 }

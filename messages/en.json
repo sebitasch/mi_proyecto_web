@@ -1,0 +1,91 @@
+{
+  "nav": {
+    "primary": "Main",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "inicio": "Home",
+    "proyectos": "Projects",
+    "sobreMi": "About",
+    "contacto": "Contact"
+  },
+  "hero": {
+    "viewProjects": "View projects",
+    "downloadCv": "Download CV",
+    "mainStack": "Core stack"
+  },
+  "home": {
+    "stack": "Stack",
+    "projects": "Projects",
+    "viewAllProjects": "View all projects",
+    "contactHeading": "Let's talk",
+    "contactCta": "Contact"
+  },
+  "projects": {
+    "pageTitle": "Projects",
+    "corporate": "Corporate projects",
+    "freelance": "Freelance projects",
+    "comingSoon": "Coming soon",
+    "technologies": "Technologies",
+    "viewProject": "View project",
+    "backToProjects": "Back to projects",
+    "context": "Context",
+    "approach": "Approach",
+    "impact": "Impact",
+    "projectCount": "{count, plural, =1 {1 project} other {# projects}}",
+    "moreTechnologies": "{count, plural, =1 {1 more technology} other {# more technologies}}",
+    "opensInNewTab": "{title} (opens in a new tab)"
+  },
+  "about": {
+    "pageTitle": "About",
+    "experience": "Experience",
+    "stack": "Stack",
+    "confidentialCompany": "Confidential company",
+    "clients": "Clients:",
+    "methodologies": "Methodologies and architecture"
+  },
+  "techCategories": {
+    "frontend": "Frontend",
+    "lenguaje": "Languages",
+    "backend": "Backend & Data",
+    "testing": "Testing & QA",
+    "devops": "DevOps",
+    "observabilidad": "Observability",
+    "ia": "AI"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. All rights reserved."
+  },
+  "contactForm": {
+    "heading": "Write to me directly",
+    "requiredNote": "All fields are required.",
+    "submitIdle": "Send message",
+    "submitPending": "Sending...",
+    "success": "Message sent. I'll get back to you within 48 hours.",
+    "successReset": "Write another message",
+    "error": "Could not send. Check your connection and try again.",
+    "fieldRequired": "This field is required",
+    "emailInvalid": "Enter a valid email",
+    "labels": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Type of enquiry",
+      "message": "Message"
+    },
+    "subjects": {
+      "vacancy": "Job opening",
+      "collaboration": "Collaboration",
+      "inquiry": "General enquiry"
+    }
+  },
+  "social": {
+    "emailAria": "Send an email to Sebastian Cardona",
+    "linkedinAria": "Sebastian Cardona's LinkedIn profile",
+    "githubAria": "Sebastian Cardona's GitHub profile",
+    "instagramAria": "Sebastian Cardona's Instagram profile"
+  },
+  "language": {
+    "label": "Change language",
+    "toEs": "View this page in Spanish",
+    "toEn": "View this page in English"
+  }
+}

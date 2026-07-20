@@ -1,24 +1,28 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 
 import { Pill } from "@/components/ui/Pill";
-import { projects } from "@/data/projects";
+import { getProjects } from "@/data";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import type { Locale } from "@/i18n/routing";
 
 interface ProyectoPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  // locale lo aporta el layout padre; aqui solo los slugs.
+  return getProjects(routing.defaultLocale).map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ProyectoPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const { slug, locale } = await params;
+  const project = getProjects(locale as Locale).find((item) => item.slug === slug);
 
   if (!project) return {};
 
@@ -26,8 +30,11 @@ export async function generateMetadata({
 }
 
 export default async function ProyectoPage({ params }: ProyectoPageProps) {
-  const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("projects");
+
+  const project = getProjects(locale as Locale).find((item) => item.slug === slug);
 
   if (!project) notFound();
 
@@ -37,7 +44,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         href="/proyectos"
         className="text-sm text-accent transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
-        Volver a proyectos
+        {t("backToProjects")}
       </Link>
 
       <p className="mt-8 text-sm text-muted">
@@ -50,7 +57,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
 
       <p className="mt-4 leading-relaxed text-muted">{project.description}</p>
 
-      <ul className="mt-6 flex flex-wrap gap-2" aria-label="Tecnologías">
+      <ul className="mt-6 flex flex-wrap gap-2" aria-label={t("technologies")}>
         {project.tags.map((tag) => (
           <Pill key={tag} as="li">
             {tag}
@@ -70,18 +77,18 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
       </div>
 
       <section className="mt-12">
-        <h2 className="text-lg font-semibold text-foreground">Contexto</h2>
+        <h2 className="text-lg font-semibold text-foreground">{t("context")}</h2>
         <p className="mt-3 leading-relaxed text-muted">{project.context}</p>
       </section>
 
       <section className="mt-10">
-        <h2 className="text-lg font-semibold text-foreground">Enfoque</h2>
+        <h2 className="text-lg font-semibold text-foreground">{t("approach")}</h2>
         <p className="mt-3 leading-relaxed text-muted">{project.approach}</p>
       </section>
 
       {project.impact.length > 0 && (
         <section className="mt-10">
-          <h2 className="text-lg font-semibold text-foreground">Impacto</h2>
+          <h2 className="text-lg font-semibold text-foreground">{t("impact")}</h2>
           <ul className="mt-3 flex flex-col gap-2">
             {project.impact.map((item) => (
               <li
@@ -103,8 +110,10 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium text-foreground transition-colors duration-[var(--dur-1)] ease-out-soft hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            Ver proyecto
-            <span className="sr-only"> (se abre en una pestaña nueva)</span>
+            {t("viewProject")}
+            <span className="sr-only">
+              {t("opensInNewTab", { title: project.title })}
+            </span>
           </a>
         </div>
       )}

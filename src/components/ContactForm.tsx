@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { contactFormCopy, contactSubjectOptions } from "@/data/contact";
+import { contactSubjectOptions } from "@/data/contact";
 
 type FieldName = "name" | "email" | "subject" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
@@ -102,26 +102,51 @@ function ChevronIcon({ className }: { className?: string }) {
   );
 }
 
-function validate(formData: FormData): FieldErrors {
+function validate(formData: FormData, copy: ContactFormCopy): FieldErrors {
   const errors: FieldErrors = {};
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const subject = String(formData.get("subject") ?? "").trim();
   const message = String(formData.get("message") ?? "").trim();
 
-  if (!name) errors.name = contactFormCopy.fieldRequired;
+  if (!name) errors.name = copy.fieldRequired;
 
-  if (!email) errors.email = contactFormCopy.fieldRequired;
-  else if (!EMAIL_PATTERN.test(email)) errors.email = contactFormCopy.emailInvalid;
+  if (!email) errors.email = copy.fieldRequired;
+  else if (!EMAIL_PATTERN.test(email)) errors.email = copy.emailInvalid;
 
-  if (!subject) errors.subject = contactFormCopy.fieldRequired;
+  if (!subject) errors.subject = copy.fieldRequired;
 
-  if (!message) errors.message = contactFormCopy.fieldRequired;
+  if (!message) errors.message = copy.fieldRequired;
 
   return errors;
 }
 
-export function ContactForm() {
+export interface ContactFormCopy {
+  heading: string;
+  requiredNote: string;
+  submitIdle: string;
+  submitPending: string;
+  success: string;
+  successReset: string;
+  error: string;
+  fieldRequired: string;
+  emailInvalid: string;
+  labels: Record<FieldName, string>;
+  subjects: Record<string, string>;
+}
+
+interface ContactFormProps {
+  /**
+   * Ya traducida por la pagina (Server Component). Deliberadamente NO se usa
+   * useTranslations aqui: cualquier Client Component que traduzca obliga al
+   * provider a cargar el formateador ICU, y como el provider vive en el
+   * layout eso suma ~11 kB de JS a TODAS las rutas, no solo a /contacto.
+   */
+  copy: ContactFormCopy;
+  locale: string;
+}
+
+export function ContactForm({ copy, locale }: ContactFormProps) {
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
@@ -145,7 +170,7 @@ export function ContactForm() {
 
     if (String(formData.get("botcheck") ?? "")) return;
 
-    const errors = validate(formData);
+    const errors = validate(formData, copy);
     setFieldErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -167,6 +192,8 @@ export function ContactForm() {
           name: formData.get("name"),
           email: formData.get("email"),
           subject: formData.get("subject"),
+          // Para saber en que idioma responder. El `subject` no cambia.
+          locale,
           message: formData.get("message"),
         }),
       });
@@ -188,7 +215,7 @@ export function ContactForm() {
   return (
     <div className="rounded-xl border border-border-subtle p-6 sm:p-8">
       <h2 className="text-lg font-semibold text-foreground">
-        {contactFormCopy.heading}
+        {copy.heading}
       </h2>
 
       {/*
@@ -199,8 +226,8 @@ export function ContactForm() {
         no duplicar el anuncio.
       */}
       <p aria-live="polite" className="sr-only">
-        {status === "success" && contactFormCopy.success}
-        {status === "error" && contactFormCopy.error}
+        {status === "success" && copy.success}
+        {status === "error" && copy.error}
       </p>
 
       {status === "success" ? (
@@ -208,7 +235,7 @@ export function ContactForm() {
           <div className="flex items-start gap-3">
             <CheckIcon className="h-5 w-5 shrink-0 text-accent" />
             <p className="text-sm font-medium text-foreground">
-              {contactFormCopy.success}
+              {copy.success}
             </p>
           </div>
           <Button
@@ -218,12 +245,12 @@ export function ContactForm() {
             onClick={handleReset}
             className="mt-4"
           >
-            {contactFormCopy.successReset}
+            {copy.successReset}
           </Button>
         </div>
       ) : (
         <form onSubmit={handleSubmit} noValidate className="mt-6 flex flex-col gap-5">
-          <p className="text-sm text-muted">{contactFormCopy.requiredNote}</p>
+          <p className="text-sm text-muted">{copy.requiredNote}</p>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -231,7 +258,7 @@ export function ContactForm() {
                 htmlFor="name"
                 className="text-sm font-medium text-foreground"
               >
-                {contactFormCopy.labels.name}
+                {copy.labels.name}
               </label>
               <input
                 id="name"
@@ -259,7 +286,7 @@ export function ContactForm() {
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
-                {contactFormCopy.labels.email}
+                {copy.labels.email}
               </label>
               <input
                 id="email"
@@ -288,7 +315,7 @@ export function ContactForm() {
               htmlFor="subject"
               className="text-sm font-medium text-foreground"
             >
-              {contactFormCopy.labels.subject}
+              {copy.labels.subject}
             </label>
             <div className="relative mt-1.5">
               <select
@@ -306,8 +333,10 @@ export function ContactForm() {
                 )}
               >
                 {contactSubjectOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                  // `value` fijo: es lo que llega al correo. La etiqueta
+                  // visible se traducira por `option.id` en la fase de i18n.
+                  <option key={option.id} value={option.value}>
+                    {copy.subjects[option.id]}
                   </option>
                 ))}
               </select>
@@ -329,7 +358,7 @@ export function ContactForm() {
               htmlFor="message"
               className="text-sm font-medium text-foreground"
             >
-              {contactFormCopy.labels.message}
+              {copy.labels.message}
             </label>
             <textarea
               id="message"
@@ -371,7 +400,7 @@ export function ContactForm() {
             <div role="alert" className="rounded-lg border-2 border-foreground p-4">
               <div className="flex items-center gap-2 text-sm text-foreground">
                 <AlertIcon className="h-4 w-4 shrink-0" />
-                <span>{contactFormCopy.error}</span>
+                <span>{copy.error}</span>
               </div>
             </div>
           )}
@@ -386,7 +415,7 @@ export function ContactForm() {
               isSubmitting && "cursor-not-allowed opacity-60",
             )}
           >
-            {isSubmitting ? contactFormCopy.submitPending : contactFormCopy.submitIdle}
+            {isSubmitting ? copy.submitPending : copy.submitIdle}
           </Button>
         </form>
       )}

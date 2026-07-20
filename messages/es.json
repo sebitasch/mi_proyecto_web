@@ -1,0 +1,91 @@
+{
+  "nav": {
+    "primary": "Principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "inicio": "Inicio",
+    "proyectos": "Proyectos",
+    "sobreMi": "Sobre mí",
+    "contacto": "Contacto"
+  },
+  "hero": {
+    "viewProjects": "Ver proyectos",
+    "downloadCv": "Descargar CV",
+    "mainStack": "Stack principal"
+  },
+  "home": {
+    "stack": "Stack",
+    "projects": "Proyectos",
+    "viewAllProjects": "Ver todos los proyectos",
+    "contactHeading": "¿Hablamos?",
+    "contactCta": "Contacto"
+  },
+  "projects": {
+    "pageTitle": "Proyectos",
+    "corporate": "Proyectos corporativos",
+    "freelance": "Proyectos freelance",
+    "comingSoon": "Próximamente",
+    "technologies": "Tecnologías",
+    "viewProject": "Ver proyecto",
+    "backToProjects": "Volver a proyectos",
+    "context": "Contexto",
+    "approach": "Enfoque",
+    "impact": "Impacto",
+    "projectCount": "{count, plural, =1 {1 proyecto} other {# proyectos}}",
+    "moreTechnologies": "{count, plural, =1 {1 tecnología más} other {# tecnologías más}}",
+    "opensInNewTab": "{title} (se abre en una pestaña nueva)"
+  },
+  "about": {
+    "pageTitle": "Sobre mí",
+    "experience": "Experiencia",
+    "stack": "Stack",
+    "confidentialCompany": "Empresa confidencial",
+    "clients": "Clientes:",
+    "methodologies": "Metodologías y arquitectura"
+  },
+  "techCategories": {
+    "frontend": "Frontend",
+    "lenguaje": "Lenguajes",
+    "backend": "Backend & Data",
+    "testing": "Testing & QA",
+    "devops": "DevOps",
+    "observabilidad": "Observabilidad",
+    "ia": "IA"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. Todos los derechos reservados."
+  },
+  "contactForm": {
+    "heading": "Escríbeme directamente",
+    "requiredNote": "Todos los campos son obligatorios.",
+    "submitIdle": "Enviar mensaje",
+    "submitPending": "Enviando...",
+    "success": "Mensaje enviado. Te responderé en menos de 48 horas.",
+    "successReset": "Escribir otro mensaje",
+    "error": "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.",
+    "fieldRequired": "Este campo es obligatorio",
+    "emailInvalid": "Ingresa un email válido",
+    "labels": {
+      "name": "Nombre",
+      "email": "Email",
+      "subject": "Tipo de consulta",
+      "message": "Mensaje"
+    },
+    "subjects": {
+      "vacancy": "Vacante",
+      "collaboration": "Colaboración",
+      "inquiry": "Consulta"
+    }
+  },
+  "social": {
+    "emailAria": "Escribir un correo a Sebastian Cardona",
+    "linkedinAria": "Perfil de LinkedIn de Sebastian Cardona",
+    "githubAria": "Perfil de GitHub de Sebastian Cardona",
+    "instagramAria": "Perfil de Instagram de Sebastian Cardona"
+  },
+  "language": {
+    "label": "Cambiar idioma",
+    "toEs": "Ver esta página en español",
+    "toEn": "Ver esta página en inglés"
+  }
+}

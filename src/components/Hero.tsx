@@ -3,11 +3,16 @@ import { ArrowRight, SquareCode } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { siteConfig } from "@/config/site";
-import { heroCodeLine, heroTagline } from "@/data/about";
+import { heroCodeLine } from "@/data/about";
+import { getAbout } from "@/data";
+import type { Locale } from "@/i18n/routing";
+import { getLocale, getTranslations } from "next-intl/server";
 
 const STACK = ["React", "Next.js", "TypeScript"] as const;
 
-export function Hero() {
+export async function Hero() {
+  const t = await getTranslations("hero");
+  const about = getAbout((await getLocale()) as Locale);
   return (
     <section
       aria-labelledby="hero-title"
@@ -27,7 +32,7 @@ export function Hero() {
       </h1>
 
       <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-        {heroTagline}
+        {about.tagline}
       </p>
 
       <p className="mt-3 text-sm text-muted">{siteConfig.location.display}</p>
@@ -44,15 +49,15 @@ export function Hero() {
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button href="#proyectos" variant="solid">
-          Ver proyectos
+          {t("viewProjects")}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Button>
-        <Button href="" variant="outline" aria-label="Descargar CV">
-          Descargar CV
+        <Button href="" variant="outline" aria-label={t("downloadCv")}>
+          {t("downloadCv")}
         </Button>
       </div>
 
-      <ul className="mt-8 flex flex-wrap gap-2" aria-label="Stack principal">
+      <ul className="mt-8 flex flex-wrap gap-2" aria-label={t("mainStack")}>
         {STACK.map((tech) => (
           <Pill key={tech} as="li">
             {tech}

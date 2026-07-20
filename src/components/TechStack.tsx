@@ -13,6 +13,7 @@ import { methodologies, stack } from "@/data/stack";
 import type { Tech, TechCategory } from "@/types";
 import { Pill } from "@/components/ui/Pill";
 import { TechIcon } from "@/components/ui/TechIcon";
+import { getTranslations } from "next-intl/server";
 
 const CATEGORY_ORDER: TechCategory[] = [
   "frontend",
@@ -39,15 +40,9 @@ const CATEGORY_ICONS: Record<TechCategory, LucideIcon> = {
   ia: Sparkles,
 };
 
-const CATEGORY_LABELS: Record<TechCategory, string> = {
-  frontend: "Frontend",
-  lenguaje: "Lenguajes",
-  backend: "Backend & Data",
-  testing: "Testing & QA",
-  devops: "DevOps",
-  observabilidad: "Observabilidad",
-  ia: "IA",
-};
+/* Las etiquetas de categoria ya no viven aqui: se resuelven con el traductor
+   `techCategories` dentro del componente, porque `t` no existe a nivel de
+   modulo. Las claves son las mismas de TechCategory. */
 
 function groupByCategory(items: Tech[]): Record<TechCategory, Tech[]> {
   // Se parte de CATEGORY_ORDER en vez de un literal fijo: al anadir una
@@ -76,7 +71,9 @@ interface TechStackProps {
   variant?: "full" | "compact";
 }
 
-export function TechStack({ variant = "full" }: TechStackProps) {
+export async function TechStack({ variant = "full" }: TechStackProps) {
+  const t = await getTranslations("about");
+  const tc = await getTranslations("techCategories");
   if (variant === "compact") {
     return (
       <ul className="flex flex-wrap gap-x-6 gap-y-3">
@@ -105,7 +102,7 @@ export function TechStack({ variant = "full" }: TechStackProps) {
                   que las categorias cuelgan de el sin saltar de nivel. */}
               <h3 className="mb-3 flex items-center gap-1.5 text-sm font-medium text-foreground">
                 <CategoryIcon className="h-4 w-4 text-accent" aria-hidden="true" />
-                {CATEGORY_LABELS[category]}
+                {tc(category)}
               </h3>
               <ul className="flex flex-col gap-2">
                 {grouped[category].map((tech) => (
@@ -126,7 +123,7 @@ export function TechStack({ variant = "full" }: TechStackProps) {
       {methodologies.length > 0 && (
         <div className="mt-10">
           <h3 className="mb-3 text-sm font-medium text-foreground">
-            Metodologías y arquitectura
+            {t("methodologies")}
           </h3>
           <ul className="flex flex-wrap gap-2">
             {methodologies.map((methodology) => (

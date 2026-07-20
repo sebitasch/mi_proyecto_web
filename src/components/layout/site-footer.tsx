@@ -1,15 +1,16 @@
 import { siteConfig, socialLinks } from "@/config/site";
 import { TechIcon } from "@/components/ui/TechIcon";
+import { getTranslations } from "next-intl/server";
 
 const footerLinks = socialLinks.filter((link) => link.inFooter);
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const t = await getTranslations("footer");
   return (
     <footer className="border-t border-border-subtle">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-6 py-8 sm:flex-row sm:justify-between">
         <p className="text-center text-sm text-muted sm:text-left">
-          © {new Date().getFullYear()} {siteConfig.name}. Todos los derechos
-          reservados.
+          {t("copyright", { year: new Date().getFullYear(), name: siteConfig.name })}
         </p>
 
         <ul className="flex items-center gap-1">

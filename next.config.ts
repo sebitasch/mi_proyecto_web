@@ -1,4 +1,7 @@
+import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -26,6 +29,23 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    /**
+     * Las rutas sin idioma existieron y estan publicadas: hay enlaces de
+     * recruiters apuntando a ellas. Un 308 permanente las conserva vivas
+     * apuntando a la version espanola.
+     */
+    return [
+      { source: "/proyectos", destination: "/es/proyectos", permanent: true },
+      {
+        source: "/proyectos/:slug",
+        destination: "/es/proyectos/:slug",
+        permanent: true,
+      },
+      { source: "/sobre-mi", destination: "/es/sobre-mi", permanent: true },
+      { source: "/contacto", destination: "/es/contacto", permanent: true },
+    ];
+  },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

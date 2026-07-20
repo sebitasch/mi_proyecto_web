@@ -1,8 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Project } from "@/types";
 import { Pill } from "@/components/ui/Pill";
+import { getTranslations } from "next-intl/server";
 
 const MAX_VISIBLE_TAGS = 4;
 
@@ -13,11 +14,12 @@ interface ProjectCardProps {
   showClient?: boolean;
 }
 
-export function ProjectCard({
+export async function ProjectCard({
   project,
   headingLevel: Heading,
   showClient = false,
 }: ProjectCardProps) {
+  const t = await getTranslations("projects");
   const visibleTags = project.tags.slice(0, MAX_VISIBLE_TAGS);
   const remainingTags = project.tags.length - visibleTags.length;
 
@@ -41,7 +43,10 @@ export function ProjectCard({
           {/* Stretched link: el ::after cubre la card entera, asi el texto
               sigue siendo seleccionable y solo hay un objetivo de foco. */}
           <Link
-            href={`/proyectos/${project.slug}`}
+            href={{
+              pathname: "/proyectos/[slug]",
+              params: { slug: project.slug },
+            }}
             className="after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {project.title}
@@ -54,7 +59,7 @@ export function ProjectCard({
           {project.description}
         </p>
 
-        <ul className="flex flex-wrap gap-2" aria-label="Tecnologías">
+        <ul className="flex flex-wrap gap-2" aria-label={t("technologies")}>
           {visibleTags.map((tag) => (
             <Pill key={tag} as="li">
               {tag}
@@ -62,9 +67,13 @@ export function ProjectCard({
           ))}
           {remainingTags > 0 && (
             <li className="rounded-lg border border-border-subtle bg-background px-3 py-1 text-sm font-medium text-muted">
-              {/* Sin el sr-only un lector de pantalla anuncia solo "+4". */}
-              +{remainingTags}
-              <span className="sr-only"> tecnologías más</span>
+              {/* El texto visible y el accesible van separados a proposito:
+                  " tecnologias mas" solo tiene sentido pegado al "+4", y en
+                  ingles el orden de las palabras cambia. Frase completa. */}
+              <span aria-hidden="true">+{remainingTags}</span>
+              <span className="sr-only">
+                {t("moreTechnologies", { count: remainingTags })}
+              </span>
             </li>
           )}
         </ul>
@@ -79,9 +88,11 @@ export function ProjectCard({
                link del heading y se ve pero no recibe clics. */
             className="relative z-10 mt-1 inline-flex w-fit items-center text-sm font-medium text-accent transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            Ver proyecto
+            {t("viewProject")}
             <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden="true" />
-            <span className="sr-only"> {project.title} (se abre en una pestaña nueva)</span>
+            <span className="sr-only">
+              {t("opensInNewTab", { title: project.title })}
+            </span>
           </a>
         )}
       </div>

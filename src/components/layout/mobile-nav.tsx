@@ -1,16 +1,30 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 
-import type { NavItem } from "@/types";
+import type { AppPathname } from "@/types";
 
-interface MobileNavProps {
-  items: readonly NavItem[];
+interface MobileNavItem {
+  href: AppPathname;
+  label: string;
 }
 
-export function MobileNav({ items }: MobileNavProps) {
+interface MobileNavProps {
+  /** Ya traducidos por SiteHeader: este componente no traduce. */
+  items: readonly MobileNavItem[];
+  primaryLabel: string;
+  openLabel: string;
+  closeLabel: string;
+}
+
+export function MobileNav({
+  items,
+  primaryLabel,
+  openLabel,
+  closeLabel,
+}: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Cerrar con Escape: sin esto el menú solo se cierra tocando el botón,
@@ -33,7 +47,7 @@ export function MobileNav({ items }: MobileNavProps) {
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
         aria-controls="mobile-nav-panel"
-        aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-label={isOpen ? closeLabel : openLabel}
         className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors duration-[var(--dur-1)] ease-out-soft hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:hidden"
       >
         {isOpen ? (
@@ -48,7 +62,7 @@ export function MobileNav({ items }: MobileNavProps) {
           id="mobile-nav-panel"
           className="absolute inset-x-0 top-16 border-b border-border-subtle bg-background sm:hidden"
         >
-          <nav aria-label="Principal">
+          <nav aria-label={primaryLabel}>
             <ul className="flex flex-col px-6 py-2">
               {items.map((item) => (
                 <li key={item.href}>
@@ -63,6 +77,7 @@ export function MobileNav({ items }: MobileNavProps) {
               ))}
             </ul>
           </nav>
+
         </div>
       )}
     </>
