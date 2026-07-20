@@ -20,6 +20,32 @@ export const contactCtaText =
 export const contactIntro =
   "Abierto a oportunidades como Senior Web UI Developer. Escríbeme para hablar de un puesto, una colaboración o simplemente contrastar una idea.";
 
+/** Copy fija del formulario de contacto (`ContactForm`), aprobada literal. */
+export const contactFormCopy = {
+  heading: "Escríbeme directamente",
+  labels: {
+    name: "Nombre",
+    email: "Email",
+    subject: "Tipo de consulta",
+    message: "Mensaje",
+  },
+  submitIdle: "Enviar mensaje",
+  submitPending: "Enviando...",
+  success: "Mensaje enviado. Te responderé en menos de 48 horas.",
+  error: "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.",
+  fieldRequired: "Este campo es obligatorio",
+  emailInvalid: "Ingresa un email válido",
+  successReset: "Escribir otro mensaje",
+  requiredNote: "Todos los campos son obligatorios.",
+} as const;
+
+/** Opciones exactas del select "Tipo de consulta". */
+export const contactSubjectOptions = [
+  "Vacante",
+  "Colaboración",
+  "Consulta",
+] as const;
+
 export const contactDetails: ContactDetail[] = [
   { label: "Ubicación", value: "Bogotá, Colombia · GMT-5" },
   { label: "Modalidad", value: "Remoto o híbrido" },

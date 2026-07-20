@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/Button";
 import { TechIcon } from "@/components/ui/TechIcon";
 import { siteConfig, socialLinks } from "@/config/site";
@@ -8,9 +9,6 @@ import { contactBody, contactDetails, contactHeadline } from "@/data/contact";
 export const metadata: Metadata = {
   title: "Contacto",
 };
-
-const emailLink = socialLinks.find((link) => link.platform === "email");
-const otherLinks = socialLinks.filter((link) => link.platform !== "email");
 
 export default function ContactoPage() {
   return (
@@ -27,38 +25,31 @@ export default function ContactoPage() {
         ))}
       </div>
 
-      {emailLink && (
-        <div className="mt-10">
-          <Button
-            href={emailLink.href}
-            size="lg"
-            aria-label={emailLink.ariaLabel}
-          >
-            {emailLink.path && (
-              <TechIcon path={emailLink.path} className="h-5 w-5" />
-            )}
-            {siteConfig.email}
-          </Button>
-        </div>
-      )}
+      <div className="mt-10">
+        <ContactForm />
+      </div>
 
-      <ul className="mt-4 flex flex-wrap gap-3">
-        {otherLinks.map((link) => (
-          <li key={link.platform}>
-            <Button
-              href={link.href}
-              variant="outline"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.ariaLabel}
-            >
-              {/* LinkedIn no tiene icono en simpleicons: se omite el svg y la
-                  etiqueta visible sostiene el boton por si sola. */}
-              {link.path && <TechIcon path={link.path} className="h-4 w-4" />}
-              {link.label}
-            </Button>
-          </li>
-        ))}
+      <ul className="mt-8 flex flex-wrap gap-3">
+        {socialLinks.map((link) => {
+          const isEmail = link.platform === "email";
+          return (
+            <li key={link.platform}>
+              <Button
+                href={link.href}
+                variant="outline"
+                size="md"
+                target={isEmail ? undefined : "_blank"}
+                rel={isEmail ? undefined : "noopener noreferrer"}
+                aria-label={link.ariaLabel}
+              >
+                {/* LinkedIn no tiene icono en simpleicons: se omite el svg y la
+                    etiqueta visible sostiene el boton por si sola. */}
+                {link.path && <TechIcon path={link.path} className="h-4 w-4" />}
+                {isEmail ? siteConfig.email : link.label}
+              </Button>
+            </li>
+          );
+        })}
       </ul>
 
       <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-5 rounded-xl border border-border-subtle p-6 sm:grid-cols-2">
