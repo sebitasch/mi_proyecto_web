@@ -15,20 +15,31 @@ export interface Tech {
   category: TechCategory;
 }
 
+export type ProjectKind = "corporativo" | "freelance";
+
 export interface Project {
   slug: string;
+  kind: ProjectKind;
+  /** Cliente final. En corporativo, el cliente de Globant. */
+  client: string;
   title: string;
   description: string;
+  /** Situación de partida: qué problema existía antes. */
+  context: string;
+  /** Qué se hizo para resolverlo. */
+  approach: string;
+  /**
+   * Resultado en términos cualitativos. Sin métricas inventadas: si algún día
+   * hay cifras reales medidas, añádelas aquí.
+   */
+  impact: string[];
   tags: string[];
   year: number;
+  /** Ruta a la portada en /public/projects. */
+  image: string;
+  /** Solo freelance: enlace al sitio publicado. */
+  url?: string;
   featured: boolean;
-  role: string;
-  problem: string;
-  solution: string;
-  highlights: string[];
-  repoUrl?: string;
-  liveUrl?: string;
-  image?: string;
 }
 
 export interface Experience {

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t"><title id="t">Estandarizacion con Git submodulos</title><rect width="1200" height="630" fill="#FFFFFF"/>
+<rect x="440" y="215" width="320" height="200" rx="16" fill="#EEF2FF" stroke="#4F46E5" stroke-width="4"/>
+<rect x="515" y="272" width="170" height="86" rx="10" fill="#FFFFFF" stroke="#4338CA" stroke-width="4"/>
+<circle cx="600" cy="315" r="20" fill="#4338CA"/>
+<path d="M440 315H285" stroke="#E4E4E7" stroke-width="4"/>
+<path d="M760 315h155" stroke="#E4E4E7" stroke-width="4"/>
+<path d="M600 215v-70" stroke="#E4E4E7" stroke-width="4"/>
+<path d="M600 415v70" stroke="#E4E4E7" stroke-width="4"/>
+<rect x="145" y="262" width="140" height="106" rx="12" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="3"/>
+<circle cx="215" cy="315" r="16" fill="#E4E4E7"/>
+<rect x="915" y="262" width="140" height="106" rx="12" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="3"/>
+<circle cx="985" cy="315" r="16" fill="#E4E4E7"/>
+<rect x="530" y="60" width="140" height="86" rx="12" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="3"/>
+<circle cx="600" cy="103" r="16" fill="#E4E4E7"/>
+<rect x="530" y="485" width="140" height="86" rx="12" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="3"/>
+<circle cx="600" cy="528" r="16" fill="#E4E4E7"/>
+<rect y="626" width="1200" height="4" fill="#4F46E5"/></svg>

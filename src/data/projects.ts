@@ -1,137 +1,156 @@
 import type { Project } from "@/types";
 
 /* -------------------------------------------------------------------------
- * ⚠️  CONTENIDO PLACEHOLDER — NO PUBLICAR
- *
- * Los 6 proyectos de abajo son ficticios. Existen solo para maquetar y probar
- * el layout con datos de forma realista. Reemplaza cada entrada por proyectos
- * reales antes de desplegar.
- *
- * `repoUrl` y `liveUrl` se omiten a propósito: enlaces inventados romperían
- * la credibilidad del portafolio si se publican por error.
- *
  * `slug` e `image` van siempre en ASCII sin tildes: se usan como URL.
+ *
+ * `impact` es cualitativo a propósito. Son trabajos reales para clientes
+ * reales: si más adelante tienes cifras medidas, sustitúyelas aquí. No
+ * inventes métricas — en una entrevista se preguntan.
+ *
+ * La sección freelance se llenará más adelante; por ahora todos los
+ * proyectos son `corporativo`.
  * ---------------------------------------------------------------------- */
 
 export const projects: Project[] = [
   {
-    slug: "panel-observabilidad",
-    title: "Panel de observabilidad para microfrontends",
-    description:
-      "Panel que unifica errores, tiempos de carga y versiones desplegadas de seis microfrontends en una sola vista.",
-    tags: ["Next.js", "TypeScript", "Module Federation", "Tailwind"],
-    year: 2025,
+    slug: "refactorizacion-monolito",
+    kind: "corporativo",
+    client: "Disney Parks",
+    year: 2023,
     featured: true,
-    role: "Frontend lead",
-    problem:
-      "Cada equipo desplegaba su microfrontend por separado y no había forma de saber qué versión estaba en producción ni de qué módulo venía un error en runtime.",
-    solution:
-      "Un host en Next.js que lee el manifiesto de cada remote al arrancar y expone su versión, su estado de salud y los errores agrupados por módulo.",
-    highlights: [
-      "Reducción del tiempo de diagnóstico de incidencias de 40 a 10 minutos",
-      "Trazado de errores hasta el microfrontend y la versión que los origina",
-      "Alertas por umbral de errores configurables por equipo",
+    title: "Refactorización de arquitectura monolito",
+    description:
+      "Eliminación de código duplicado mediante patrones arquitectónicos, para devolver legibilidad y margen de crecimiento al monolito.",
+    context:
+      "El código duplicado se había acumulado por toda la aplicación monolítica. Cada cambio obligaba a repetirlo en varios sitios y el riesgo de dejar alguno sin actualizar crecía con cada iteración.",
+    approach:
+      "Identificación de la duplicación recurrente y extracción a abstracciones comunes, aplicando patrones arquitectónicos y convenciones compartidas por el equipo.",
+    impact: [
+      "Un cambio se toca en un solo lugar en vez de replicarse por el código",
+      "Base más legible para quien entra nuevo al proyecto",
+      "Margen para escalar sin arrastrar la deuda anterior",
     ],
-    image: "/projects/panel-observabilidad.svg",
+    tags: ["React", "Next.js", "Jenkins", "Splunk", "TypeScript", "JavaScript"],
+    image: "/projects/refactorizacion-monolito.svg",
   },
   {
-    slug: "bff-catalogo",
-    title: "BFF para catálogo multi-tienda",
-    description:
-      "Capa intermedia que agrega cuatro APIs de catálogo y devuelve una respuesta única adaptada a web y móvil.",
-    tags: ["Node.js", "Fastify", "TypeScript", "Redis"],
-    year: 2025,
-    featured: true,
-    role: "Fullstack",
-    problem:
-      "El cliente web hacía siete peticiones para pintar una ficha de producto, con lógica de merge duplicada en web y en la app móvil.",
-    solution:
-      "Un BFF en Fastify que resuelve la agregación en el servidor, cachea en Redis por SKU y expone un contrato distinto por tipo de cliente.",
-    highlights: [
-      "De siete peticiones a una por ficha de producto",
-      "Cache por SKU con invalidación por evento de stock",
-      "Contrato tipado compartido entre backend y frontend",
-    ],
-    image: "/projects/bff-catalogo.svg",
-  },
-  {
-    slug: "design-system",
-    title: "Design system y librería de componentes",
-    description:
-      "Librería de 34 componentes React con tokens de diseño, documentación en Storybook y tests de regresión visual.",
-    tags: ["React", "TypeScript", "Storybook", "Vitest"],
-    year: 2024,
-    featured: false,
-    role: "Frontend",
-    problem:
-      "Tres productos de la misma empresa usaban botones, inputs y modales distintos, y cada rediseño obligaba a repetir el trabajo en cada repositorio.",
-    solution:
-      "Un paquete versionado con tokens en CSS custom properties, componentes accesibles y una guía de migración por producto.",
-    highlights: [
-      "34 componentes con cobertura de tests del 85%",
-      "Tokens de color y espaciado consumidos por los tres productos",
-      "Auditoría de accesibilidad WCAG AA sobre los componentes interactivos",
-    ],
-    image: "/projects/design-system.svg",
-  },
-  {
-    slug: "migracion-checkout",
-    title: "Migración de checkout con feature flags",
-    description:
-      "Reescritura del flujo de pago de Pages Router a App Router, liberada de forma progresiva por porcentaje de tráfico.",
-    tags: ["Next.js", "TypeScript", "Feature flags", "Playwright"],
-    year: 2024,
-    featured: false,
-    role: "Frontend",
-    problem:
-      "El checkout antiguo bloqueaba la actualización de Next.js, pero era el flujo que generaba ingresos y no admitía un despliegue de golpe.",
-    solution:
-      "Convivencia de ambos checkouts tras un feature flag, con reparto de tráfico incremental y métricas de conversión comparadas por variante.",
-    highlights: [
-      "Migración completada sin caída de la tasa de conversión",
-      "Rollout por tramos del 5% al 100% en cuatro semanas",
-      "Suite end-to-end en Playwright cubriendo los dos flujos a la vez",
-    ],
-    image: "/projects/migracion-checkout.svg",
-  },
-  {
-    slug: "portal-documentacion",
-    title: "Portal de documentación de APIs",
-    description:
-      "Sitio que genera documentación navegable a partir de especificaciones OpenAPI, con ejemplos ejecutables por endpoint.",
-    tags: ["React", "OpenAPI", "Docker", "Postman"],
+    slug: "optimizacion-seo",
+    kind: "corporativo",
+    client: "Disney Parks",
     year: 2023,
     featured: false,
-    role: "Fullstack",
-    problem:
-      "La documentación de doce servicios internos vivía en wikis desactualizadas y cada equipo la escribía con un formato distinto.",
-    solution:
-      "Un pipeline que valida el OpenAPI de cada servicio en CI y publica un portal único, de forma que la documentación se rompe si el contrato cambia.",
-    highlights: [
-      "Doce servicios documentados desde una fuente única",
-      "Validación del contrato en CI antes del merge",
-      "Colección de Postman generada automáticamente por servicio",
+    title: "Optimización de SEO internacional",
+    description:
+      "Estrategia de posicionamiento adaptada a cada mercado internacional, respetando las reglas de negocio del cliente.",
+    context:
+      "La marca competía en varios mercados con necesidades de posicionamiento distintas, y cada región traía sus propias reglas de negocio que la implementación debía respetar.",
+    approach:
+      "Estrategia de SEO diferenciada por mercado, ajustando la implementación técnica a las restricciones de negocio de cada región en lugar de aplicar una configuración única.",
+    impact: [
+      "Posicionamiento adaptado a cada mercado, no una configuración genérica",
+      "Reglas de negocio respetadas sin sacrificar visibilidad",
     ],
-    image: "/projects/portal-documentacion.svg",
+    tags: ["React", "Next.js", "Jenkins", "Splunk", "TypeScript", "JavaScript"],
+    image: "/projects/optimizacion-seo.svg",
   },
   {
-    slug: "buscador-facetado",
-    title: "Buscador de inventario con filtros facetados",
+    slug: "modulos-producto",
+    kind: "corporativo",
+    client: "British Airways",
+    year: 2026,
+    featured: true,
+    title: "Módulos de producto en React y Next.js",
     description:
-      "Buscador sobre un inventario de 80.000 referencias, con filtros combinables y estado sincronizado con la URL.",
-    tags: ["React", "TypeScript", "Elasticsearch", "AWS"],
-    year: 2023,
-    featured: false,
-    role: "Fullstack",
-    problem:
-      "La búsqueda existente hacía una consulta SQL con LIKE por cada filtro y tardaba más de cuatro segundos en catálogos grandes.",
-    solution:
-      "Índice en Elasticsearch con agregaciones por faceta y un frontend que refleja cada filtro en la URL para poder compartir resultados.",
-    highlights: [
-      "Tiempo de respuesta por debajo de 200 ms en el percentil 95",
-      "Filtros combinables reflejados en la URL y navegables con el historial",
-      "Reindexado incremental disparado por cambios de stock",
+      "Diseño e implementación de módulos de producto: flujo de checkout, selección de asientos y gestión de órdenes de vuelo.",
+    context:
+      "La aplicación de la aerolínea necesitaba ampliar su producto con flujos nuevos, sobre una base ya en producción y con tráfico real de pasajeros.",
+    approach:
+      "Diseño e implementación de extremo a extremo de tres módulos —checkout, selección de asientos y gestión de órdenes— integrados en la arquitectura existente.",
+    impact: [
+      "Tres flujos críticos de negocio entregados sobre producción",
+      "Observabilidad con Datadog para diagnosticar sobre datos reales",
+      "Despliegue continuo con GitHub CI/CD y ARGO",
     ],
-    image: "/projects/buscador-facetado.svg",
+    tags: [
+      "React",
+      "Next.js",
+      "ARGO",
+      "Datadog",
+      "TypeScript",
+      "JavaScript",
+      "GitHub CI/CD",
+      "Git",
+    ],
+    image: "/projects/modulos-producto.svg",
+  },
+  {
+    slug: "git-submodulos",
+    kind: "corporativo",
+    client: "British Airways",
+    year: 2026,
+    featured: false,
+    title: "Estandarización con Git submódulos",
+    description:
+      "Artefacto compartido como submódulo para unificar funciones y componentes entre equipos que antes los definían por separado.",
+    context:
+      "Cada equipo definía funciones, componentes y páginas a su manera. Lo que era común terminaba implementado varias veces y con criterios distintos.",
+    approach:
+      "Creación de un artefacto compartido, distribuido como submódulo de Git, que centraliza las funciones de uso general y fija una convención única para todos los equipos.",
+    impact: [
+      "Una sola definición para lo que antes cada equipo resolvía por su cuenta",
+      "Los cambios en lo común se propagan sin coordinar equipo por equipo",
+      "Convención explícita en lugar de criterio individual",
+    ],
+    tags: [
+      "Git",
+      "GitHub CI/CD",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Datadog",
+      "ARGO",
+    ],
+    image: "/projects/git-submodulos.svg",
+  },
+  {
+    slug: "web-apis-globales",
+    kind: "corporativo",
+    client: "British Airways",
+    year: 2026,
+    featured: false,
+    title: "Web APIs para contenido global",
+    description:
+      "Centralización de header y footer para todos los flujos de una aplicación en microservicios, servidos desde una API propia.",
+    context:
+      "Con la aplicación repartida en microservicios, cada flujo resolvía por su cuenta elementos comunes como el header y el footer, con el riesgo de que divergieran entre sí.",
+    approach:
+      "APIs propias en Next.js que sirven ese contenido global a todos los flujos desde una única fuente, con independencia del microservicio que los consuma.",
+    impact: [
+      "Header y footer consistentes en toda la aplicación",
+      "Un cambio global deja de requerir tocar cada microservicio",
+    ],
+    tags: ["Next.js", "API REST"],
+    image: "/projects/web-apis-globales.svg",
+  },
+  {
+    slug: "internacionalizacion",
+    kind: "corporativo",
+    client: "British Airways",
+    year: 2026,
+    featured: false,
+    title: "Internacionalización y multilenguaje",
+    description:
+      "Traducción optimizada para los mercados e idiomas del cliente, con caché en CDN y render combinado SSR/CSR.",
+    context:
+      "El cliente opera en varios mercados con idiomas distintos. Las traducciones tenían que servirse rápido y sin penalizar el rendimiento de la aplicación.",
+    approach:
+      "Traducción por idioma y mercado apoyada en caché de CDN, combinando renderizado en servidor y en cliente según lo que conviniera a cada flujo.",
+    impact: [
+      "Contenido en el idioma correcto según el mercado del visitante",
+      "Coste de la traducción amortiguado por la caché en CDN",
+    ],
+    tags: ["i18n", "CDN", "SSR", "CSR", "React", "Next.js"],
+    image: "/projects/internacionalizacion.svg",
   },
 ];

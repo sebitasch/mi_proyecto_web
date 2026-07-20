@@ -12,7 +12,12 @@ export function FeaturedProjects() {
 
         <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} headingLevel="h3" />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              headingLevel="h3"
+              showClient
+            />
           ))}
         </div>
 

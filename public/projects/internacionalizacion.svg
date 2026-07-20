@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t"><title id="t">Internacionalizacion y multilenguaje</title><rect width="1200" height="630" fill="#FFFFFF"/>
+<circle cx="470" cy="315" r="175" fill="none" stroke="#E4E4E7" stroke-width="3"/>
+<circle cx="600" cy="315" r="175" fill="#EEF2FF" opacity=".75"/>
+<circle cx="600" cy="315" r="175" fill="none" stroke="#4F46E5" stroke-width="4"/>
+<circle cx="730" cy="315" r="175" fill="none" stroke="#E4E4E7" stroke-width="3"/>
+<path d="M600 140v350" stroke="#4338CA" stroke-width="4"/>
+<ellipse cx="600" cy="315" rx="72" ry="175" fill="none" stroke="#4338CA" stroke-width="4"/>
+<path d="M432 258h336" stroke="#4F46E5" stroke-width="3" opacity=".6"/>
+<path d="M425 315h350" stroke="#4F46E5" stroke-width="3" opacity=".6"/>
+<path d="M432 372h336" stroke="#4F46E5" stroke-width="3" opacity=".6"/>
+<circle cx="470" cy="315" r="13" fill="#4338CA"/>
+<circle cx="730" cy="315" r="13" fill="#4338CA"/>
+<circle cx="600" cy="315" r="13" fill="#4F46E5"/>
+<rect y="626" width="1200" height="4" fill="#4F46E5"/></svg>
