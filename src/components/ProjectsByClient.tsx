@@ -1,5 +1,6 @@
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/motion/Reveal";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { getProjects } from "@/data";
 import type { Project } from "@/types";
 import type { Locale } from "@/i18n/routing";
@@ -62,7 +63,10 @@ export async function ProjectsByClient() {
     <div className="space-y-12">
       {groups.map((group) => (
         <div key={group.client}>
-          <div className="flex items-baseline gap-2">
+          {/* `items-center` y no `items-baseline`: con un logo en la fila, la
+              linea base del texto ya no es la referencia comun. */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <BrandLogo name={group.client} className="h-6 w-auto object-contain" />
             <h3 className="text-lg font-medium text-foreground">
               {group.client}
             </h3>

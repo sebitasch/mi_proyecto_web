@@ -1,7 +1,9 @@
 import { Braces, GitBranch } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
+import { portraitPhoto, portraitSize } from "@/config/site";
 import { Reveal } from "@/components/motion/Reveal";
 import { TechStack } from "@/components/TechStack";
 import { getAbout } from "@/data";
@@ -25,23 +27,40 @@ export default async function SobreMiPage({
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
-      <h1 className="text-2xl font-semibold font-display text-foreground sm:text-[30px]">
-        {t("pageTitle")}
-      </h1>
+      {/* La foto va junto al h1 y los datos de cabecera, no sobre ellos: en
+          movil se apila y en pantalla ancha comparte fila. */}
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+        {portraitPhoto && (
+          <Image
+            src={portraitPhoto}
+            alt={t("photoAlt")}
+            width={portraitSize.width}
+            height={portraitSize.height}
+            priority
+            className="h-40 w-40 shrink-0 rounded-xl object-cover shadow-sm sm:h-48 sm:w-48"
+          />
+        )}
 
-      {/* Pares etiqueta/valor: `dl` en vez de divs, para que un lector de
-          pantalla anuncie la relacion entre cada dato y su rotulo. Sin
-          encabezado propio: es metadato del h1, no una seccion aparte. */}
-      <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-border-subtle py-5">
-        {ABOUT_FACT_KEYS.map((key) => about.facts[key]).map((fact) => (
-          <div key={fact.label}>
-            <dt className="text-xs font-medium uppercase tracking-wider text-accent">
-              {fact.label}
-            </dt>
-            <dd className="mt-1 text-sm text-foreground">{fact.value}</dd>
-          </div>
-        ))}
-      </dl>
+        <div className="min-w-0 flex-1">
+          <h1 className="text-2xl font-semibold font-display text-foreground sm:text-[30px]">
+            {t("pageTitle")}
+          </h1>
+
+          {/* Pares etiqueta/valor: `dl` en vez de divs, para que un lector de
+              pantalla anuncie la relacion entre cada dato y su rotulo. Sin
+              encabezado propio: es metadato del h1, no una seccion aparte. */}
+          <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-border-subtle py-5">
+            {ABOUT_FACT_KEYS.map((key) => about.facts[key]).map((fact) => (
+              <div key={fact.label}>
+                <dt className="text-xs font-medium uppercase tracking-wider text-accent">
+                  {fact.label}
+                </dt>
+                <dd className="mt-1 text-sm text-foreground">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
 
       <div className="mt-8 flex flex-col gap-4">
         {about.paragraphs.map((paragraph) => (

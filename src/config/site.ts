@@ -1,5 +1,17 @@
 import type { SocialLink } from "@/types";
 
+/**
+ * Retrato de /sobre-mi. Cadena vacia = la pagina no muestra foto.
+ *
+ * Tipado explicito como `string` y fuera de `siteConfig`: dentro de un objeto
+ * `as const` el valor se estrecharia a su literal y el condicional de la
+ * pagina dejaria de compilar al vaciarlo.
+ */
+export const portraitPhoto: string = "/sebastian-cardona.jpg";
+
+/** Dimensiones reales del archivo, para que next/image reserve el hueco. */
+export const portraitSize = { width: 1080, height: 1075 } as const;
+
 export const siteConfig = {
   name: "Sebastian Cardona",
   fullName: "Sebastian Cardona Hernandez",
