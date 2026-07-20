@@ -56,9 +56,11 @@
   /* Animaciones. Generan las utilidades `animate-*`. */
   --animate-fade-up: fade-up var(--dur-3) var(--ease-out-soft) both;
   --animate-fade-in: fade-in var(--dur-3) var(--ease-out-soft) both;
-  /* Transicion de ruta: solo opacidad (un desplazamiento en cada navegacion
-     se lee como salto de layout) y mas corta, porque se paga en cada clic. */
-  --animate-route-in: fade-in var(--dur-2) var(--ease-out-soft) both;
+  /* Transicion de ruta. Antes era solo opacidad por miedo a que el
+     desplazamiento se leyera como salto de layout; con 10px y la easing suave
+     no pasa, y la navegacion se nota mucho mas. Sigue siendo corta: se paga
+     en cada clic. */
+  --animate-route-in: route-in var(--dur-3) var(--ease-out-soft) both;
   --animate-scale-in: scale-in var(--dur-3) var(--ease-out-soft) both;
   --animate-wipe-in: wipe-in var(--dur-4) var(--ease-out-soft) both;
   --animate-float: float var(--dur-5) var(--ease-in-out-soft) infinite alternate;
@@ -80,6 +82,19 @@
     }
     to {
       opacity: 1;
+    }
+  }
+
+  /* Entrada de ruta: sube y se asienta. El `scale` es minimo a proposito —
+     lo justo para que se sienta que la pagina llega, no que rebota. */
+  @keyframes route-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.995);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 

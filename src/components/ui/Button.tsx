@@ -33,8 +33,13 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
   lg: "px-6 py-3 text-base",
 };
 
+/**
+ * `transition-[...]` explicita y no `transition-colors`: el hundido al pulsar
+ * necesita que `transform` tambien transicione, y `transition-all` acabaria
+ * animando propiedades de layout sin querer.
+ */
 const BASE_CLASSES =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-[var(--dur-1)] ease-out-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[color,background-color,border-color,transform] duration-[var(--dur-1)] ease-out-soft active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export function Button({
   variant = "solid",

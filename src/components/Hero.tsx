@@ -1,7 +1,6 @@
 import { ArrowRight, SquareCode, BadgeCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
-import { HeroBackdrop } from "@/components/HeroBackdrop";
 import { Pill } from "@/components/ui/Pill";
 import { siteConfig } from "@/config/site";
 import { heroCodeLine } from "@/data/about";
@@ -21,7 +20,6 @@ export async function Hero() {
       aria-labelledby="hero-title"
       className="relative mx-auto max-w-5xl px-6 py-20 sm:py-28"
     >
-      <HeroBackdrop />
 
       {/* role label */}
       <p

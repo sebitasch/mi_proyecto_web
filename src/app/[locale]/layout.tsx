@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { BackdropScroll } from "@/components/motion/BackdropScroll";
+import { SiteBackdrop } from "@/components/SiteBackdrop";
 import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
 
@@ -103,6 +105,12 @@ export default async function LocaleLayout({
           Los Client Components que necesiten traducir montan su propio
           provider acotado a su namespace, como hace /contacto con ContactForm.
         */}
+        {/* Fondo global: se dibuja en servidor y BackdropScroll solo publica
+            el progreso de scroll para que se mueva. Fuera del provider a
+            proposito: no traduce nada. */}
+        <SiteBackdrop />
+        <BackdropScroll />
+
         <NextIntlClientProvider locale={locale} messages={{}}>
           <SiteHeader />
           <main className="flex-1">{children}</main>
