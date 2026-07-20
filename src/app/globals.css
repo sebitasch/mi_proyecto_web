@@ -47,6 +47,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
 
   /* Easings. Sin rebote: un portafolio para recruiters no debe botar. */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);

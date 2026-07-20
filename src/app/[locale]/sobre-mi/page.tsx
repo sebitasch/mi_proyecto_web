@@ -2,6 +2,7 @@ import { Braces, GitBranch } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
+import { Reveal } from "@/components/motion/Reveal";
 import { TechStack } from "@/components/TechStack";
 import { getAbout } from "@/data";
 import { ABOUT_FACT_KEYS } from "@/data/about";
@@ -24,7 +25,7 @@ export default async function SobreMiPage({
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
-      <h1 className="text-2xl font-semibold text-foreground sm:text-[30px]">
+      <h1 className="text-2xl font-semibold font-display text-foreground sm:text-[30px]">
         {t("pageTitle")}
       </h1>
 
@@ -44,31 +45,31 @@ export default async function SobreMiPage({
 
       <div className="mt-8 flex flex-col gap-4">
         {about.paragraphs.map((paragraph) => (
-          <p key={paragraph} className="leading-relaxed text-muted">
+          <p key={paragraph} className="leading-relaxed text-muted sm:text-justify sm:hyphens-auto">
             {paragraph}
           </p>
         ))}
       </div>
 
-      <section className="mt-12">
-        <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+      <Reveal as="section" className="mt-12 border-t border-border-subtle pt-12">
+        <h2 className="flex items-center gap-2 text-lg font-semibold font-display text-foreground">
           <GitBranch className="h-5 w-5 text-accent" aria-hidden="true" />
           {t("experience")}
         </h2>
         <div className="mt-6">
           <ExperienceTimeline />
         </div>
-      </section>
+      </Reveal>
 
-      <section className="mt-12">
-        <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+      <Reveal as="section" className="mt-12 border-t border-border-subtle pt-12">
+        <h2 className="flex items-center gap-2 text-lg font-semibold font-display text-foreground">
           <Braces className="h-5 w-5 text-accent" aria-hidden="true" />
           {t("stack")}
         </h2>
         <div className="mt-6">
           <TechStack variant="full" />
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 }

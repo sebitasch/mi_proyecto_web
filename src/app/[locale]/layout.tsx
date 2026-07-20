@@ -1,7 +1,7 @@
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -13,6 +13,11 @@ import "../globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -84,7 +89,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} flex min-h-screen flex-col`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} flex min-h-screen flex-col`}>
         {/*
           Obligatorio: el `Link` de next-intl es un Client Component y necesita
           el contexto de idioma para resolver /es/... vs /en/... Sin provider

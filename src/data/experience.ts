@@ -39,5 +39,9 @@ export const experienceBase = [
   },
 ] as const satisfies readonly ExperienceBase[];
 
+export const notableClients: string[] = experienceBase.flatMap(
+  (entry) => ("clients" in entry ? entry.clients : []),
+);
+
 /** Unión literal de los ids: obliga a que cada idioma los cubra todos. */
 export type ExperienceId = (typeof experienceBase)[number]["id"];

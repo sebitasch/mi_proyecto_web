@@ -1,53 +1,81 @@
-import { ArrowRight, SquareCode } from "lucide-react";
+import { ArrowRight, SquareCode, BadgeCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { siteConfig } from "@/config/site";
 import { heroCodeLine } from "@/data/about";
 import { getAbout } from "@/data";
+import { notableClients } from "@/data/experience";
 import type { Locale } from "@/i18n/routing";
 import { getLocale, getTranslations } from "next-intl/server";
 
-const STACK = ["React", "Next.js", "TypeScript"] as const;
-
 export async function Hero() {
   const t = await getTranslations("hero");
-  const about = getAbout((await getLocale()) as Locale);
+  const ta = await getTranslations("about");
+  const locale = (await getLocale()) as Locale;
+  const about = getAbout(locale);
+
   return (
     <section
       aria-labelledby="hero-title"
-      className="mx-auto max-w-5xl px-6 py-20 sm:py-28"
+      className="relative mx-auto max-w-5xl px-6 py-20 sm:py-28"
     >
-      {/* `uppercase` por CSS y no en el dato: siteConfig.role se reutiliza en
-          metadata y ahi debe conservar su capitalizacion original. */}
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+      {/* React logo watermark background */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="pointer-events-none absolute -right-6 top-4 -z-10 hidden h-56 w-56 text-accent/5 sm:block sm:h-72 sm:w-72 lg:h-96 lg:w-96"
+        style={{
+          transform:
+            "translate3d(calc((var(--mx, .5) - .5) * -16px), calc((var(--my, .5) - .5) * -16px), 0)",
+        }}
+      >
+        <use href="/icons.svg#react" />
+      </svg>
+
+      {/* role label */}
+      <p
+        className="animate-fade-up text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:text-sm"
+        style={{ animationDelay: "calc(0 * var(--stagger-step))" }}
+      >
         {siteConfig.role}
       </p>
 
+      {/* name/title (H1) */}
       <h1
         id="hero-title"
-        className="mt-4 text-[30px] font-semibold leading-tight tracking-tight text-foreground"
+        className="mt-4 animate-fade-up text-4xl font-semibold font-display leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+        style={{ animationDelay: "calc(1 * var(--stagger-step))" }}
       >
         {siteConfig.name}
       </h1>
 
-      <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-        {about.tagline}
-      </p>
+      {/* value proposition / tagline + location */}
+      <div
+        className="animate-fade-up"
+        style={{ animationDelay: "calc(2 * var(--stagger-step))" }}
+      >
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl lg:text-2xl">
+          {about.tagline}
+        </p>
+        <p className="mt-3 text-sm text-muted">{siteConfig.location.display}</p>
+      </div>
 
-      <p className="mt-3 text-sm text-muted">{siteConfig.location.display}</p>
-
-      {/* Decorativo: aria-hidden porque no aporta informacion, solo tono.
-          El texto real esta en el HTML, asi que sin JS se ve completo. */}
+      {/* decorative "code line" chip, wipe-in animated */}
       <p
         aria-hidden="true"
-        className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border-subtle bg-accent-soft/40 px-3 py-2 text-sm text-muted"
+        className="mt-6 inline-flex animate-wipe-in items-center gap-2 rounded-lg border border-border-subtle bg-accent-soft/40 px-3 py-2 text-sm text-muted"
       >
         <SquareCode className="h-4 w-4 shrink-0 text-accent" />
-        <span className="animate-wipe-in whitespace-nowrap">{heroCodeLine}</span>
+        <span className="whitespace-nowrap">{heroCodeLine}</span>
       </p>
 
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+      {/* CTAs */}
+      <div
+        className="mt-8 flex animate-fade-up flex-col gap-3 sm:flex-row sm:items-center"
+        style={{ animationDelay: "calc(3 * var(--stagger-step))" }}
+      >
         <Button href="#proyectos" variant="solid">
           {t("viewProjects")}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -57,12 +85,30 @@ export async function Hero() {
         </Button>
       </div>
 
-      <ul className="mt-8 flex flex-wrap gap-2" aria-label={t("mainStack")}>
-        {STACK.map((tech) => (
-          <Pill key={tech} as="li">
-            {tech}
+      {/* credibility strip: experience, clients, availability */}
+      <ul
+        className="mt-8 flex animate-fade-up flex-wrap gap-3"
+        aria-label={t("credibility")}
+        style={{ animationDelay: "calc(4 * var(--stagger-step))" }}
+      >
+        <li>
+          <Pill className="inline-flex items-center gap-1.5">
+            <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
+            {about.facts.experience.value}
           </Pill>
-        ))}
+        </li>
+        <li>
+          <Pill>
+            <span className="font-medium">{ta("clients")}</span>{" "}
+            {notableClients.join(" · ")}
+          </Pill>
+        </li>
+        <li>
+          <Pill className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" aria-hidden="true" />
+            {t("availability")}
+          </Pill>
+        </li>
       </ul>
     </section>
   );

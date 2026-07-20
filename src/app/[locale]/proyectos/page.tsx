@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectsByClient } from "@/components/ProjectsByClient";
+import { Reveal } from "@/components/motion/Reveal";
 import { getProjects } from "@/data";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
@@ -24,10 +25,10 @@ export default async function ProyectosPage({
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
-      <h1 className="text-2xl font-semibold text-foreground">{t("pageTitle")}</h1>
+      <h1 className="text-2xl font-semibold font-display text-foreground">{t("pageTitle")}</h1>
 
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-foreground">
+      <section className="mt-12 border-t border-border-subtle pt-12">
+        <h2 className="text-xl font-semibold font-display text-foreground">
           {t("corporate")}
         </h2>
 
@@ -36,8 +37,8 @@ export default async function ProyectosPage({
         </div>
       </section>
 
-      <section className="mt-20">
-        <h2 className="text-xl font-semibold text-foreground">
+      <section className="mt-20 border-t border-border-subtle pt-12">
+        <h2 className="text-xl font-semibold font-display text-foreground">
           {t("freelance")}
         </h2>
 
@@ -48,15 +49,16 @@ export default async function ProyectosPage({
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {freelanceProjects.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  headingLevel="h3"
-                  /* Freelance no se agrupa por cliente, asi que la card
-                     es el unico sitio donde puede mostrarlo. */
-                  showClient
-                />
+              {freelanceProjects.map((project, index) => (
+                <Reveal key={project.slug} index={index}>
+                  <ProjectCard
+                    project={project}
+                    headingLevel="h3"
+                    /* Freelance no se agrupa por cliente, asi que la card
+                       es el unico sitio donde puede mostrarlo. */
+                    showClient
+                  />
+                </Reveal>
               ))}
             </div>
           )}

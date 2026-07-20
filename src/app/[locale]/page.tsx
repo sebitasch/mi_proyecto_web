@@ -23,10 +23,9 @@ export default async function HomePage({
       </CursorField>
       <FeaturedProjects />
 
-      {/* Sin padding superior: el Hero ya aporta separacion por abajo. */}
-      <section className="pb-16 sm:pb-20">
+      <section className="border-t border-border-subtle py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-2xl font-semibold text-foreground">{t("stack")}</h2>
+          <h2 className="text-2xl font-semibold font-display text-foreground">{t("stack")}</h2>
           <div className="mt-6">
             <TechStack variant="compact" />
           </div>

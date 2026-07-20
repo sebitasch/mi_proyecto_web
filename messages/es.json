@@ -11,7 +11,8 @@
   "hero": {
     "viewProjects": "Ver proyectos",
     "downloadCv": "Descargar CV",
-    "mainStack": "Stack principal"
+    "availability": "Disponible para nuevos proyectos",
+    "credibility": "Datos de experiencia"
   },
   "home": {
     "stack": "Stack",

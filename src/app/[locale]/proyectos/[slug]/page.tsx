@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 
 import { Pill } from "@/components/ui/Pill";
+import { Reveal } from "@/components/motion/Reveal";
 import { getProjects } from "@/data";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
@@ -51,11 +52,11 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         {project.client} · {project.year}
       </p>
 
-      <h1 className="mt-2 text-2xl font-semibold leading-tight text-foreground sm:text-[30px]">
+      <h1 className="mt-2 text-2xl font-semibold font-display leading-tight text-foreground sm:text-[30px]">
         {project.title}
       </h1>
 
-      <p className="mt-4 leading-relaxed text-muted">{project.description}</p>
+      <p className="mt-4 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.description}</p>
 
       <ul className="mt-6 flex flex-wrap gap-2" aria-label={t("technologies")}>
         {project.tags.map((tag) => (
@@ -76,19 +77,19 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         />
       </div>
 
-      <section className="mt-12">
-        <h2 className="text-lg font-semibold text-foreground">{t("context")}</h2>
-        <p className="mt-3 leading-relaxed text-muted">{project.context}</p>
-      </section>
+      <Reveal as="section" className="mt-12">
+        <h2 className="text-lg font-semibold font-display text-foreground">{t("context")}</h2>
+        <p className="mt-3 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.context}</p>
+      </Reveal>
 
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold text-foreground">{t("approach")}</h2>
-        <p className="mt-3 leading-relaxed text-muted">{project.approach}</p>
-      </section>
+      <Reveal as="section" className="mt-10">
+        <h2 className="text-lg font-semibold font-display text-foreground">{t("approach")}</h2>
+        <p className="mt-3 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.approach}</p>
+      </Reveal>
 
       {project.impact.length > 0 && (
-        <section className="mt-10">
-          <h2 className="text-lg font-semibold text-foreground">{t("impact")}</h2>
+        <Reveal as="section" className="mt-10">
+          <h2 className="text-lg font-semibold font-display text-foreground">{t("impact")}</h2>
           <ul className="mt-3 flex flex-col gap-2">
             {project.impact.map((item) => (
               <li
@@ -99,7 +100,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
               </li>
             ))}
           </ul>
-        </section>
+        </Reveal>
       )}
 
       {project.url && (

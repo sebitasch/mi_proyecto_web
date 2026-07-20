@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/ContactForm";
-import { Button } from "@/components/ui/Button";
-import { TechIcon } from "@/components/ui/TechIcon";
-import { siteConfig, socialLinks } from "@/config/site";
-import { contactBody, contactDetails, contactHeadline, contactSubjectOptions } from "@/data/contact";
+import { getContact } from "@/data";
+import { CONTACT_DETAIL_KEYS, contactSubjectOptions } from "@/data/contact";
+import type { Locale } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
@@ -19,24 +18,17 @@ export default async function ContactoPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const tf = await getTranslations("contactForm");
+  const contact = getContact(locale as Locale);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
-      <h1 className="text-2xl font-semibold leading-tight text-foreground sm:text-[30px]">
-        {contactHeadline}
+      <h1 className="text-2xl font-semibold font-display leading-tight text-foreground sm:text-[30px]">
+        {contact.headline}
       </h1>
 
-      <div className="mt-6 flex flex-col gap-4">
-        {contactBody.map((paragraph) => (
-          <p key={paragraph} className="leading-relaxed text-muted">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
       {/*
-        La copy se resuelve aqui, en el servidor, y baja como prop. Se probo
-        con NextIntlClientProvider acotado y useTranslations dentro del form:
+        La copy del formulario se resuelve aqui, en el servidor, y baja como prop.
+        Se probo con NextIntlClientProvider acotado y useTranslations dentro del form:
         costaba ~11 kB de JS en TODAS las rutas, porque el provider del layout
         pasa a incluir el formateador ICU. Para 15 strings no compensa.
       */}
@@ -69,39 +61,30 @@ export default async function ContactoPage({
         />
       </div>
 
-      <ul className="mt-8 flex flex-wrap gap-3">
-        {socialLinks.map((link) => {
-          const isEmail = link.platform === "email";
+      <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-5 rounded-xl border border-border-subtle shadow-sm p-6 sm:grid-cols-2">
+        {CONTACT_DETAIL_KEYS.map((key) => {
+          const detail = contact.details[key];
           return (
-            <li key={link.platform}>
-              <Button
-                href={link.href}
-                variant="outline"
-                size="md"
-                target={isEmail ? undefined : "_blank"}
-                rel={isEmail ? undefined : "noopener noreferrer"}
-                aria-label={link.ariaLabel}
-              >
-                {/* LinkedIn no tiene icono en simpleicons: se omite el svg y la
-                    etiqueta visible sostiene el boton por si sola. */}
-                {link.iconId && <TechIcon id={link.iconId} className="h-4 w-4" />}
-                {isEmail ? siteConfig.email : link.label}
-              </Button>
-            </li>
+            <div key={key}>
+              <dt className="text-xs font-medium uppercase tracking-wider text-accent">
+                {detail.label}
+              </dt>
+              <dd className="mt-1 text-sm text-foreground">{detail.value}</dd>
+            </div>
           );
         })}
-      </ul>
-
-      <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-5 rounded-xl border border-border-subtle p-6 sm:grid-cols-2">
-        {contactDetails.map((detail) => (
-          <div key={detail.label}>
-            <dt className="text-xs font-medium uppercase tracking-wider text-accent">
-              {detail.label}
-            </dt>
-            <dd className="mt-1 text-sm text-foreground">{detail.value}</dd>
-          </div>
-        ))}
       </dl>
+
+      <div className="mt-12 border-t border-border-subtle pt-12 flex flex-col gap-4">
+        {contact.body.map((paragraph) => (
+          <p
+            key={paragraph}
+            className="leading-relaxed text-muted sm:text-justify sm:hyphens-auto"
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
     </div>
   );
 }

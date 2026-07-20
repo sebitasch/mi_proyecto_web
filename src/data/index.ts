@@ -1,5 +1,7 @@
 import { aboutEn } from "@/data/about.en";
 import { aboutEs } from "@/data/about.es";
+import { contactEn } from "@/data/contact.en";
+import { contactEs } from "@/data/contact.es";
 import { experienceBase } from "@/data/experience";
 import { experienceEn } from "@/data/experience.en";
 import { experienceEs } from "@/data/experience.es";
@@ -7,6 +9,7 @@ import { projectsBase } from "@/data/projects";
 import { projectsEn } from "@/data/projects.en";
 import { projectsEs } from "@/data/projects.es";
 import type { AboutContent } from "@/data/about";
+import type { ContactContent } from "@/data/contact";
 import type { Locale } from "@/i18n/routing";
 import type { Experience, Project } from "@/types";
 
@@ -32,6 +35,11 @@ const ABOUT_CONTENT: Record<Locale, AboutContent> = {
   en: aboutEn,
 };
 
+const CONTACT_CONTENT: Record<Locale, ContactContent> = {
+  es: contactEs,
+  en: contactEn,
+};
+
 export function getProjects(locale: Locale): Project[] {
   const content = PROJECT_CONTENT[locale];
   return projectsBase.map((base) => ({ ...base, ...content[base.slug] }));
@@ -44,4 +52,8 @@ export function getExperience(locale: Locale): Experience[] {
 
 export function getAbout(locale: Locale): AboutContent {
   return ABOUT_CONTENT[locale];
+}
+
+export function getContact(locale: Locale): ContactContent {
+  return CONTACT_CONTENT[locale];
 }

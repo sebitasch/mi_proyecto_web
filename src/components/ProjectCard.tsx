@@ -24,7 +24,7 @@ export async function ProjectCard({
   const remainingTags = project.tags.length - visibleTags.length;
 
   return (
-    <article className="relative overflow-hidden rounded-xl border border-border-subtle transition-colors duration-[var(--dur-1)] ease-out-soft hover:border-accent">
+    <article className="relative overflow-hidden rounded-xl border border-border-subtle shadow-sm transition-colors duration-[var(--dur-1)] ease-out-soft hover:border-accent">
       <div className="relative aspect-[1200/630]">
         <Image
           src={project.image}
@@ -55,7 +55,7 @@ export async function ProjectCard({
 
         {showClient && <p className="text-sm text-muted">{project.client}</p>}
 
-        <p className="text-sm leading-relaxed text-muted">
+        <p className="text-sm leading-relaxed text-muted sm:text-justify sm:hyphens-auto">
           {project.description}
         </p>
 

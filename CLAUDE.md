@@ -23,7 +23,7 @@ generic.
   needs JS, write small own client components that wrap server-rendered
   children. NO Framer Motion / Motion: it weighs 15-40 KB and would force
   "use client" on components that are server today.
-- next/font with the Inter font
+- next/font with Space Grotesk for headings/labels (display), Inter for body/UI
 
 ## Visual identity (final)
 - Primary background: #FFFFFF
@@ -33,17 +33,19 @@ generic.
 - Primary accent (indigo): #4F46E5
 - Primary accent hover/dark: #4338CA
 - Soft accent (pill/badge backgrounds): #EEF2FF
-- Typography: Inter (headings and body), weights 400/500/600
+- Typography: Space Grotesk (headings/labels), Inter (body/UI), weights 400/500/600
 - Border radius: 8px on controls/buttons, 12px on cards
 - Mode: light by default (dark mode optional in a later phase)
 - Overall style: modern and clean. NO terminal/console-style aesthetic.
 
-## Hero structure (already defined)
-1. Role label at the top (e.g. "FRONTEND / FULLSTACK DEVELOPER"), small, in indigo.
-2. Name / title (H1), ~27-30px, weight 600.
-3. Value proposition in 1-2 lines, direct tone, no filler or clichés.
-4. Two CTAs: one solid indigo ("View projects"), one outline ("Download CV").
-5. Row of pills with the main stack (React, Next.js, TypeScript).
+## Hero structure (last updated 2026-07-20)
+1. Role label at the top (e.g. "FRONTEND / FULLSTACK DEVELOPER"), small, in indigo, responsive scaling.
+2. Name / title (H1), responsive: text-4xl sm:text-5xl lg:text-6xl, Space Grotesk (font-display), weight 600, with leading-tight.
+3. Value proposition / tagline (2-3 lines, dual-audience: casual users + recruiters), direct tone, marketing-focused CTA, scaled text-lg sm:text-xl lg:text-2xl.
+4. React logo SVG watermark in background (5% opacity, top-right, parallax on mouse, hidden on mobile).
+5. Entrance animations: fade-up on load, each block staggered via CSS custom property (`--stagger-step`). No dependency on JS for visibility.
+6. Two CTAs below tagline: one solid indigo ("View projects"), one outline ("Download CV").
+7. Credibility strip (3 pills): years of experience (with badge icon), notable clients (Disney, British Airways), availability (with pulse dot). Replaces old hardcoded 3-tech stack row.
 
 ## Code conventions
 - Functional components + hooks, always TypeScript.

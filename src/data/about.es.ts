@@ -8,7 +8,7 @@ export const aboutEs: AboutContent = {
     "En el último tramo he integrado IA dentro del propio flujo de desarrollo: la API de Anthropic Claude, Model Context Protocol (MCP) y desarrollo guiado por especificación. No por novedad, sino porque acorta de forma medible la distancia entre una idea y algo desplegado.",
   ],
   tagline:
-    "Construyo aplicaciones web escalables con React, Next.js y Node.js: arquitecturas de microfrontends, rendimiento medible e IA integrada en el ciclo de desarrollo.",
+    "Diseño y desarrollo sitios y productos web que hacen crecer marcas y negocios — con la solidez técnica que exigen equipos de nivel enterprise como Globant. Hablemos de tu proyecto.",
   facts: {
     role: { label: "Rol", value: "Senior Web UI Developer" },
     education: { label: "Formación", value: "Ingeniería de Sistemas" },

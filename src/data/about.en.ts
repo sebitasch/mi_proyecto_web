@@ -15,7 +15,7 @@ export const aboutEn: AboutContent = {
     "More recently I've brought AI into the development workflow itself: the Anthropic Claude API, Model Context Protocol (MCP) and spec-driven development. Not for novelty, but because it measurably shortens the distance between an idea and something deployed.",
   ],
   tagline:
-    "I build scalable web applications with React, Next.js and Node.js: microfrontend architectures, measurable performance and AI built into the development cycle.",
+    "I design and build websites and products that help brands and businesses grow — with the technical rigor enterprise teams like Globant demand. Let's talk about your project.",
   facts: {
     role: { label: "Role", value: "Senior Web UI Developer" },
     education: { label: "Education", value: "Systems Engineering" },
