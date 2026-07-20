@@ -11,6 +11,20 @@ import type { ProjectSlug } from "@/data/projects";
  * de compilación, no un hueco silencioso en la página.
  */
 export const projectsEs: Record<ProjectSlug, ProjectContent> = {
+  "line-visualization": {
+    title: "Line Visualization — estudio creativo",
+    description:
+      "Sitio web para un estudio de visualización 3D arquitectónica: diseño y construcción en Framer con una estética sobria y narrativa.",
+    context:
+      "El estudio trabaja la imagen arquitectónica con un enfoque artístico y narrativo, y necesitaba una web que comunicara ese lenguaje —sobrio, honesto, cuidado— en lugar de una plantilla corporativa plana.",
+    approach:
+      "Diseño de la identidad visual del sitio y construcción completa en Framer: jerarquía tipográfica marcada, galería de trabajos destacados, sección de servicios y un flujo de trabajo por pasos, todo responsive y con los metadatos sociales y de SEO cuidados.",
+    impact: [
+      "Presencia web propia que refleja el tono del estudio sin recurrir a plantillas genéricas",
+      "Recorrido claro: trabajos destacados, servicios y proceso en una sola narrativa",
+      "Base mantenible en Framer que el estudio puede seguir actualizando sin depender de código",
+    ],
+  },
   "refactorizacion-monolito": {
     title: "Refactorización de arquitectura monolito",
     description:

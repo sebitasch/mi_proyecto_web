@@ -9,6 +9,20 @@ import type { ProjectContent } from "@/types";
  * invented metrics.
  */
 export const projectsEn: Record<ProjectSlug, ProjectContent> = {
+  "line-visualization": {
+    title: "Line Visualization — creative studio",
+    description:
+      "Website for an architectural 3D visualization studio: designed and built in Framer with a restrained, narrative aesthetic.",
+    context:
+      "The studio approaches architectural imagery with an artistic, narrative focus and needed a site that conveyed that language —restrained, honest, considered— rather than a flat corporate template.",
+    approach:
+      "Designed the site's visual identity and built it end to end in Framer: strong typographic hierarchy, a featured-work gallery, a services section and a step-by-step workflow, fully responsive with social and SEO metadata in place.",
+    impact: [
+      "A distinct web presence that reflects the studio's tone without generic templates",
+      "A clear journey: featured work, services and process in a single narrative",
+      "A maintainable Framer base the studio can keep updating without code",
+    ],
+  },
   "refactorizacion-monolito": {
     title: "Monolith architecture refactor",
     description:

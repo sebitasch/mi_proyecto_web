@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Line Visualization — estudio creativo">
+  <defs>
+    <linearGradient id="lv-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2a2f"/>
+      <stop offset="1" stop-color="#201f23"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#lv-bg)"/>
+
+  <!-- marca "+" fina, esquina superior izquierda de la composicion -->
+  <g stroke="#ECE8E1" stroke-width="3" stroke-linecap="square">
+    <line x1="437" y1="238" x2="437" y2="286"/>
+    <line x1="413" y1="262" x2="461" y2="262"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="485" y="278"
+        font-family="Helvetica, Arial, sans-serif" font-size="70" font-weight="400"
+        letter-spacing="2" fill="#ECE8E1">LINE</text>
+  <text x="485" y="352"
+        font-family="Helvetica, Arial, sans-serif" font-size="70" font-weight="400"
+        letter-spacing="2" fill="#ECE8E1">VISUALIZATION</text>
+
+  <!-- tagline -->
+  <text x="488" y="410"
+        font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="400"
+        letter-spacing="10" fill="#9a968f">ESTUDIO CREATIVO</text>
+</svg>

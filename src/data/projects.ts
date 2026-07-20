@@ -10,6 +10,19 @@ import type { ProjectBase } from "@/types";
 
 export const projectsBase = [
   {
+    slug: "line-visualization",
+    kind: "freelance",
+    client: "Line Visualization",
+    /* Sin React/Next a proposito: el sitio esta hecho en Framer y el
+       `meta-generator` lo delata. Listar aqui lo que no se uso es falso y un
+       recruiter tecnico lo detecta al abrirlo. */
+    tags: ["Framer", "Diseño UI", "Responsive", "SEO"],
+    year: 2025,
+    image: "/projects/line-visualization.svg",
+    url: "https://www.linevisualization.com/",
+    featured: true,
+  },
+  {
     slug: "refactorizacion-monolito",
     kind: "corporativo",
     client: "Disney Parks",
