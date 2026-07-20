@@ -16,15 +16,15 @@
   },
   "home": {
     "stack": "Stack",
-    "projects": "Proyectos",
     "viewAllProjects": "Ver todos los proyectos",
     "contactHeading": "¿Hablamos?",
     "contactCta": "Contacto"
   },
   "projects": {
     "pageTitle": "Proyectos",
-    "corporate": "Proyectos corporativos",
+    "corporateExperience": "Experiencia corporativa",
     "freelance": "Proyectos freelance",
+    "freelanceBadge": "Freelance",
     "comingSoon": "Próximamente",
     "technologies": "Tecnologías",
     "viewProject": "Ver proyecto",

@@ -1,5 +1,6 @@
 import { ContactCta } from "@/components/ContactCta";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { FreelanceProjects } from "@/components/FreelanceProjects";
 import { Hero } from "@/components/Hero";
 import { CursorField } from "@/components/motion/CursorField";
 import { TechStack } from "@/components/TechStack";
@@ -21,6 +22,15 @@ export default async function HomePage({
       <CursorField>
         <Hero />
       </CursorField>
+
+      {/* Freelance primero y destacado, en adelanto: solo los marcados como
+          featured. Si no hay ninguno no renderiza nada. */}
+      <FreelanceProjects
+        className="border-t border-border-subtle py-16 sm:py-20"
+        containerClassName="mx-auto max-w-5xl px-6"
+        featuredOnly
+      />
+
       <FeaturedProjects />
 
       <section className="border-t border-border-subtle py-16 sm:py-20">

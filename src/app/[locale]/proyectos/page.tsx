@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { ProjectCard } from "@/components/ProjectCard";
+import { FreelanceProjects } from "@/components/FreelanceProjects";
 import { ProjectsByClient } from "@/components/ProjectsByClient";
-import { Reveal } from "@/components/motion/Reveal";
-import { getProjects } from "@/data";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Locale } from "@/i18n/routing";
 
 export const metadata: Metadata = {
   title: "Proyectos",
@@ -19,49 +16,23 @@ export default async function ProyectosPage({
   setRequestLocale(locale);
   const t = await getTranslations("projects");
 
-  const freelanceProjects = getProjects(locale as Locale).filter(
-    (project) => project.kind === "freelance",
-  );
-
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
       <h1 className="text-2xl font-semibold font-display text-foreground">{t("pageTitle")}</h1>
 
+      {/* Freelance primero y destacado. Si no hay ninguno no renderiza nada,
+          y la experiencia corporativa queda como primer bloque. */}
+      <FreelanceProjects className="mt-12 border-t border-border-subtle pt-12" />
+
+      {/* Mas sobrio a proposito: encabezado menor y peso mas ligero que el
+          de freelance, para que la jerarquia entre bloques se lea sola. */}
       <section className="mt-12 border-t border-border-subtle pt-12">
-        <h2 className="text-xl font-semibold font-display text-foreground">
-          {t("corporate")}
+        <h2 className="text-xl font-medium font-display text-foreground">
+          {t("corporateExperience")}
         </h2>
 
         <div className="mt-8">
           <ProjectsByClient />
-        </div>
-      </section>
-
-      <section className="mt-20 border-t border-border-subtle pt-12">
-        <h2 className="text-xl font-semibold font-display text-foreground">
-          {t("freelance")}
-        </h2>
-
-        <div className="mt-8">
-          {freelanceProjects.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-border-subtle p-10 text-center">
-              <p className="text-sm text-muted">{t("comingSoon")}</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {freelanceProjects.map((project, index) => (
-                <Reveal key={project.slug} index={index}>
-                  <ProjectCard
-                    project={project}
-                    headingLevel="h3"
-                    /* Freelance no se agrupa por cliente, asi que la card
-                       es el unico sitio donde puede mostrarlo. */
-                    showClient
-                  />
-                </Reveal>
-              ))}
-            </div>
-          )}
         </div>
       </section>
     </div>

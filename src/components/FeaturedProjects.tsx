@@ -9,13 +9,23 @@ import type { Locale } from "@/i18n/routing";
 
 export async function FeaturedProjects() {
   const t = await getTranslations("home");
+  const tp = await getTranslations("projects");
   const locale = (await getLocale()) as Locale;
-  const featuredProjects = getProjects(locale).filter((p) => p.featured);
+
+  /* Solo corporativos: los freelance los muestra <FreelanceProjects> justo
+     encima, y sin este filtro un freelance destacado saldria dos veces. */
+  const featuredProjects = getProjects(locale).filter(
+    (project) => project.featured && project.kind === "corporativo",
+  );
 
   return (
     <section id="proyectos" className="border-t border-border-subtle py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
-        <h2 className="text-2xl font-semibold font-display text-foreground">{t("projects")}</h2>
+        {/* Mismo encabezado y mismo peso contenido que en /proyectos: los dos
+            bloques deben leerse igual en las dos paginas. */}
+        <h2 className="text-xl font-medium font-display text-foreground">
+          {tp("corporateExperience")}
+        </h2>
 
         <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {featuredProjects.map((project, index) => (
