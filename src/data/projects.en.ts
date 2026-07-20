@@ -9,6 +9,20 @@ import type { ProjectContent } from "@/types";
  * invented metrics.
  */
 export const projectsEn: Record<ProjectSlug, ProjectContent> = {
+  "juliana-fashionart": {
+    title: "Juliana Fashion Art — store and academy",
+    description:
+      "Website and online store for a Colombian fashion designer and illustrator: a catalogue of books and stationery, courses, and checkout in local currency.",
+    context:
+      "The brand sold fashion-illustration training and products with no home of its own: catalogue, courses and portfolio were scattered across social media and direct messages, and every sale was closed by hand.",
+    approach:
+      "Built the site on WordPress with WooCommerce as the store: a catalogue of books, sketchbooks and workshops, product pages with ratings, prices in Colombian pesos and shipping, plus the brand sections —about, academy, services and blog— under a single navigation.",
+    impact: [
+      "Catalogue, courses and brand gathered in one owned site instead of scattered across social media",
+      "Direct sales with visible pricing and shipping, rather than closing each order by message",
+      "A base the client can maintain herself: adding a product does not depend on code",
+    ],
+  },
   "line-visualization": {
     title: "Line Visualization — creative studio",
     description:

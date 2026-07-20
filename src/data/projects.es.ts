@@ -11,6 +11,20 @@ import type { ProjectSlug } from "@/data/projects";
  * de compilación, no un hueco silencioso en la página.
  */
 export const projectsEs: Record<ProjectSlug, ProjectContent> = {
+  "juliana-fashionart": {
+    title: "Juliana Fashion Art — tienda y academia",
+    description:
+      "Sitio y tienda online para una diseñadora e ilustradora de moda colombiana: catálogo de libros y papelería, cursos y venta con pagos en pesos.",
+    context:
+      "La marca vendía formación y producto de ilustración de moda sin un lugar propio donde reunirlo: el catálogo, los cursos y el portafolio vivían repartidos entre redes y mensajes directos, y cada venta se cerraba a mano.",
+    approach:
+      "Montaje del sitio en WordPress con WooCommerce como tienda: catálogo de libros, cuadernos de bocetos y talleres, fichas de producto con valoraciones, precios en pesos colombianos y envío, más las secciones de marca —sobre mí, academia, servicios y blog— en una sola navegación.",
+    impact: [
+      "Catálogo, cursos y marca reunidos en un sitio propio en vez de repartidos entre redes",
+      "Venta directa con precios y envío visibles, sin cerrar cada pedido por mensaje",
+      "Base que la clienta puede actualizar sola: añadir producto no depende de código",
+    ],
+  },
   "line-visualization": {
     title: "Line Visualization — estudio creativo",
     description:

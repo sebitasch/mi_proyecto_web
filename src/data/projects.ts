@@ -10,6 +10,19 @@ import type { ProjectBase } from "@/types";
 
 export const projectsBase = [
   {
+    slug: "juliana-fashionart",
+    kind: "freelance",
+    client: "Juliana Fashion Art",
+    /* Verificado abriendo el sitio: rutas `wp-content/uploads/`, paginacion y
+       valoraciones de WooCommerce. Solo se listan esas dos mas lo observable
+       de la tienda; nada de SEO o analitica que no se pueda comprobar. */
+    tags: ["WordPress", "WooCommerce", "E-commerce", "Responsive"],
+    year: 2025,
+    image: "/projects/juliana-fashionart.svg",
+    url: "https://julianafashionart.com/",
+    featured: true,
+  },
+  {
     slug: "line-visualization",
     kind: "freelance",
     client: "Line Visualization",

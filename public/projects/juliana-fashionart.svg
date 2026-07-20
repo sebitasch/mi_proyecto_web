@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Juliana Fashion Art — tienda y academia de ilustración de moda">
+  <defs>
+    <linearGradient id="jfa-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#faf6f5"/>
+      <stop offset="1" stop-color="#f3e9e7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#jfa-bg)"/>
+
+  <!-- Disco de la marca. El rosa sale del logotipo del cliente. -->
+  <ellipse cx="905" cy="300" rx="188" ry="170" fill="#e7a5a0"/>
+
+  <!-- Corazon fino, guino al detalle del logotipo -->
+  <path d="M905 268c-9-16-34-13-34 7 0 15 20 27 34 39 14-12 34-24 34-39 0-20-25-23-34-7z"
+        fill="none" stroke="#faf6f5" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Wordmark. Serif en cursiva: evoca la firma manuscrita del logotipo
+       sin depender de una fuente incrustada. -->
+  <text x="120" y="318"
+        font-family="Georgia, 'Times New Roman', serif" font-size="104" font-style="italic"
+        fill="#2b2a2f">Juliana</text>
+
+  <text x="126" y="376"
+        font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="400"
+        letter-spacing="14" fill="#8a7f7d">FASHION ART</text>
+
+  <!-- Filete de acento bajo el wordmark -->
+  <line x1="126" y1="422" x2="330" y2="422" stroke="#e7a5a0" stroke-width="4" stroke-linecap="square"/>
+</svg>
