@@ -33,6 +33,7 @@
   --dur-3: 320ms; /* reveal al hacer scroll */
   --dur-4: 520ms; /* entrada del hero */
   --dur-5: 800ms; /* ambiente */
+  --dur-orbit: 90s; /* giro de las orbitas del fondo */
 
   /* Paso del escalonado. Se satura a 6 en el consumidor. */
   --stagger-step: 60ms;
@@ -64,6 +65,8 @@
   --animate-scale-in: scale-in var(--dur-3) var(--ease-out-soft) both;
   --animate-wipe-in: wipe-in var(--dur-4) var(--ease-out-soft) both;
   --animate-float: float var(--dur-5) var(--ease-in-out-soft) infinite alternate;
+  /* `linear`: una orbita que acelera y frena no parece una orbita. */
+  --animate-orbit: orbit var(--dur-orbit) linear infinite;
 
   @keyframes fade-up {
     from {
@@ -120,6 +123,15 @@
     }
   }
 
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   @keyframes float {
     from {
       transform: translateY(-8px);
@@ -128,6 +140,14 @@
       transform: translateY(8px);
     }
   }
+}
+
+html {
+  /* El salto instantaneo a #proyectos se leia como un corte. La regla de
+     reduced motion de arriba lo devuelve a `auto`. */
+  scroll-behavior: smooth;
+  /* El header es sticky (4rem): sin esto el ancla aterriza debajo de el. */
+  scroll-padding-top: 5rem;
 }
 
 body {
