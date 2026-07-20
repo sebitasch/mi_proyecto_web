@@ -19,7 +19,7 @@ export async function FeaturedProjects() {
   );
 
   return (
-    <section id="proyectos" className="border-t border-border-subtle py-16 sm:py-20">
+    <section className="border-t border-border-subtle py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
         {/* Mismo encabezado y mismo peso contenido que en /proyectos: los dos
             bloques deben leerse igual en las dos paginas. */}
