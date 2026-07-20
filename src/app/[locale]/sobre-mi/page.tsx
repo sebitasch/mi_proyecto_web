@@ -37,7 +37,16 @@ export default async function SobreMiPage({
             width={portraitSize.width}
             height={portraitSize.height}
             priority
-            className="h-40 w-40 shrink-0 rounded-xl object-cover shadow-sm sm:h-48 sm:w-48"
+            /* Translucida a proposito, para que no compita con el texto. El
+               anillo sustituye a la sombra: una sombra bajo una imagen
+               semitransparente se lee como un error de render, no como
+               relieve. Ambos se atenuan juntos porque `opacity` afecta al
+               elemento entero, anillo incluido.
+
+               Vuelve a opacidad plena al pasar por encima: asi cede
+               protagonismo en la lectura pero se ve completa cuando alguien
+               se fija. En tactil no hay hover y se queda atenuada. */
+            className="h-40 w-40 shrink-0 rounded-full object-cover opacity-80 ring-1 ring-border-subtle transition-opacity duration-[var(--dur-2)] ease-out-soft hover:opacity-100 sm:h-48 sm:w-48"
           />
         )}
 
