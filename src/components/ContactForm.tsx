@@ -24,7 +24,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * el orden de la hoja de estilos, no el del atributo.
  */
 const FIELD_BASE =
-  "h-11 w-full rounded-lg bg-background text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60";
+  "h-11 w-full rounded-lg bg-background text-sm transition-colors duration-[var(--dur-1)] ease-out-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60";
 
 const FIELD_PADDING = {
   default: "px-3.5",

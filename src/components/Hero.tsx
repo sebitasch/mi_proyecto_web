@@ -1,7 +1,9 @@
+import { ArrowRight, SquareCode } from "lucide-react";
+
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { siteConfig } from "@/config/site";
-import { heroTagline } from "@/data/about";
+import { heroCodeLine, heroTagline } from "@/data/about";
 
 const STACK = ["React", "Next.js", "TypeScript"] as const;
 
@@ -30,9 +32,20 @@ export function Hero() {
 
       <p className="mt-3 text-sm text-muted">{siteConfig.location.display}</p>
 
+      {/* Decorativo: aria-hidden porque no aporta informacion, solo tono.
+          El texto real esta en el HTML, asi que sin JS se ve completo. */}
+      <p
+        aria-hidden="true"
+        className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border-subtle bg-accent-soft/40 px-3 py-2 text-sm text-muted"
+      >
+        <SquareCode className="h-4 w-4 shrink-0 text-accent" />
+        <span className="animate-wipe-in whitespace-nowrap">{heroCodeLine}</span>
+      </p>
+
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button href="#proyectos" variant="solid">
           Ver proyectos
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Button>
         <Button href="" variant="outline" aria-label="Descargar CV">
           Descargar CV

@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/types";
@@ -21,7 +22,7 @@ export function ProjectCard({
   const remainingTags = project.tags.length - visibleTags.length;
 
   return (
-    <article className="relative overflow-hidden rounded-xl border border-border-subtle transition-colors hover:border-accent">
+    <article className="relative overflow-hidden rounded-xl border border-border-subtle transition-colors duration-[var(--dur-1)] ease-out-soft hover:border-accent">
       <div className="relative aspect-[1200/630]">
         <Image
           src={project.image}
@@ -76,9 +77,10 @@ export function ProjectCard({
             rel="noopener noreferrer"
             /* relative z-10: sin esto queda bajo el overlay del stretched
                link del heading y se ve pero no recibe clics. */
-            className="relative z-10 mt-1 inline-flex w-fit items-center text-sm font-medium text-accent transition-colors hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="relative z-10 mt-1 inline-flex w-fit items-center text-sm font-medium text-accent transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Ver proyecto
+            <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden="true" />
             <span className="sr-only"> {project.title} (se abre en una pestaña nueva)</span>
           </a>
         )}

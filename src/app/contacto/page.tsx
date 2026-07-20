@@ -44,7 +44,7 @@ export default function ContactoPage() {
               >
                 {/* LinkedIn no tiene icono en simpleicons: se omite el svg y la
                     etiqueta visible sostiene el boton por si sola. */}
-                {link.path && <TechIcon path={link.path} className="h-4 w-4" />}
+                {link.iconId && <TechIcon id={link.iconId} className="h-4 w-4" />}
                 {isEmail ? siteConfig.email : link.label}
               </Button>
             </li>

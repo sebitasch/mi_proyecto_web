@@ -19,7 +19,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-muted transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="text-muted transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {item.label}
             </Link>

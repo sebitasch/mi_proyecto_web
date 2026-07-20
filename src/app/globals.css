@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* -------------------------------------------------------------------------
+ * Reduced motion: primero, para que nada de lo definido abajo se le escape.
+ *
+ * `1ms` y no `none` a proposito: con `none` los eventos `animationend` no
+ * disparan y cualquier logica que dependa de ellos se queda colgada.
+ * ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 :root {
   /* Identidad visual (CLAUDE.md) — modo claro por defecto */
   --background: #ffffff;
@@ -9,6 +26,16 @@
   --accent: #4f46e5; /* índigo */
   --accent-hover: #4338ca;
   --accent-soft: #eef2ff; /* fondos de pill/badge */
+
+  /* Escala de duracion. Ningun componente inventa la suya. */
+  --dur-1: 120ms; /* hover, focus */
+  --dur-2: 200ms; /* UI y transicion de ruta */
+  --dur-3: 320ms; /* reveal al hacer scroll */
+  --dur-4: 520ms; /* entrada del hero */
+  --dur-5: 800ms; /* ambiente */
+
+  /* Paso del escalonado. Se satura a 6 en el consumidor. */
+  --stagger-step: 60ms;
 }
 
 @theme inline {
@@ -20,6 +47,71 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-inter);
+
+  /* Easings. Sin rebote: un portafolio para recruiters no debe botar. */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Animaciones. Generan las utilidades `animate-*`. */
+  --animate-fade-up: fade-up var(--dur-3) var(--ease-out-soft) both;
+  --animate-fade-in: fade-in var(--dur-3) var(--ease-out-soft) both;
+  /* Transicion de ruta: solo opacidad (un desplazamiento en cada navegacion
+     se lee como salto de layout) y mas corta, porque se paga en cada clic. */
+  --animate-route-in: fade-in var(--dur-2) var(--ease-out-soft) both;
+  --animate-scale-in: scale-in var(--dur-3) var(--ease-out-soft) both;
+  --animate-wipe-in: wipe-in var(--dur-4) var(--ease-out-soft) both;
+  --animate-float: float var(--dur-5) var(--ease-in-out-soft) infinite alternate;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Barrido de izquierda a derecha. Funciona con cualquier tipografia,
+     a diferencia del tecleo con steps() que exige monoespaciada. */
+  @keyframes wipe-in {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes float {
+    from {
+      transform: translateY(-8px);
+    }
+    to {
+      transform: translateY(8px);
+    }
+  }
 }
 
 body {
@@ -27,4 +119,21 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------------------------------------------------------
+ * Reveal al hacer scroll.
+ *
+ * El estado oculto SOLO existe bajo `.js-motion`, clase que anade un script
+ * sincrono en <head> cuando hay IntersectionObserver y el usuario no pidio
+ * reduced motion. Sin JS, sin soporte o con reduced motion la clase nunca
+ * llega y el contenido se ve siempre. Nunca puede quedar invisible.
+ * ---------------------------------------------------------------------- */
+.js-motion [data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+[data-reveal="shown"] {
+  animation: fade-up var(--dur-3) var(--ease-out-soft) both;
 }

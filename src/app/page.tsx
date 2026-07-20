@@ -1,12 +1,17 @@
 import { ContactCta } from "@/components/ContactCta";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { Hero } from "@/components/Hero";
+import { CursorField } from "@/components/motion/CursorField";
 import { TechStack } from "@/components/TechStack";
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      {/* CursorField es cliente, pero <Hero /> se le pasa como children ya
+          renderizado en servidor: no se convierte en Client Component. */}
+      <CursorField>
+        <Hero />
+      </CursorField>
       <FeaturedProjects />
 
       {/* Sin padding superior: el Hero ya aporta separacion por abajo. */}

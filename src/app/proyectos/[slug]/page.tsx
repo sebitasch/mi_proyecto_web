@@ -35,7 +35,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
     <article className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
       <Link
         href="/proyectos"
-        className="text-sm text-accent transition-colors hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="text-sm text-accent transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         Volver a proyectos
       </Link>
@@ -101,7 +101,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="inline-flex items-center rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium text-foreground transition-colors duration-[var(--dur-1)] ease-out-soft hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Ver proyecto
             <span className="sr-only"> (se abre en una pestaña nueva)</span>

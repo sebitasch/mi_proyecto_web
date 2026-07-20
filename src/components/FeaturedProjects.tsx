@@ -1,3 +1,5 @@
+import { ArrowRight } from "lucide-react";
+
 import { Button } from "@/components/ui/Button";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
@@ -24,6 +26,7 @@ export function FeaturedProjects() {
         <div className="mt-10">
           <Button href="/proyectos" variant="outline">
             Ver todos los proyectos
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </div>

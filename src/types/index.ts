@@ -9,9 +9,8 @@ export type TechCategory =
 
 export interface Tech {
   name: string;
+  /** Identificador del simbolo en /public/icons.svg. */
   slug: string;
-  /** Atributo `d` del SVG, sobre un viewBox de 24x24. */
-  path: string;
   category: TechCategory;
 }
 
@@ -70,8 +69,11 @@ export interface SocialLink {
   href: string;
   /** Slug de simpleicons.org. */
   slug: string;
-  /** Atributo `d` del SVG, sobre un viewBox de 24x24. */
-  path: string;
+  /**
+   * Id del simbolo en /public/icons.svg. Ausente cuando no hay icono
+   * disponible (LinkedIn): la UI debe degradar a texto.
+   */
+  iconId?: string;
   /** Se muestra también en el footer. */
   inFooter: boolean;
 }

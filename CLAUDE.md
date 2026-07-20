@@ -19,7 +19,10 @@ generic.
 - Next.js 15 (App Router)
 - Strict TypeScript
 - Tailwind CSS for styling
-- Framer Motion for subtle animations (install when needed)
+- Animations: CSS first (keyframes + tokens in globals.css). For what genuinely
+  needs JS, write small own client components that wrap server-rendered
+  children. NO Framer Motion / Motion: it weighs 15-40 KB and would force
+  "use client" on components that are server today.
 - next/font with the Inter font
 
 ## Visual identity (final)
@@ -46,6 +49,8 @@ generic.
 - Functional components + hooks, always TypeScript.
 - One component per file, named in PascalCase.
 - Prioritize accessibility: semantic HTML, aria-labels where applicable, correct contrast.
+- Every animation must respect `prefers-reduced-motion`, and content must never
+  depend on JS to become visible.
 - Prioritize performance: next/image, lazy loading, avoid unnecessary re-renders.
 - Comment only what isn't obvious; the code should be self-explanatory.
 - No Title Case or ALL CAPS in copy except short intentional labels.

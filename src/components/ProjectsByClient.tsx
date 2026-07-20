@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/ProjectCard";
+import { Reveal } from "@/components/motion/Reveal";
 import { projects } from "@/data/projects";
 
 interface ClientGroup {
@@ -68,8 +69,10 @@ export function ProjectsByClient() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {group.projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} headingLevel="h4" />
+            {group.projects.map((project, index) => (
+              <Reveal key={project.slug} index={index}>
+                <ProjectCard project={project} headingLevel="h4" />
+              </Reveal>
             ))}
           </div>
         </div>

@@ -5,6 +5,15 @@ export const about: string[] = [
   "En el último tramo he integrado IA dentro del propio flujo de desarrollo: la API de Anthropic Claude, Model Context Protocol (MCP) y desarrollo guiado por especificación. No por novedad, sino porque acorta de forma medible la distancia entre una idea y algo desplegado.",
 ];
 
+/**
+ * Línea decorativa del hero. Se revela con un barrido de `clip-path`, no con
+ * un tecleo carácter a carácter: eso exige tipografía monoespaciada, y la
+ * identidad visual usa Inter en todo.
+ *
+ * Una sola línea, 40-55 caracteres: más se desborda en móvil.
+ */
+export const heroCodeLine = 'const developer = { focus: "performance" }';
+
 /** Frase de apoyo bajo el H1 del hero. Máximo dos líneas en desktop. */
 export const heroTagline =
   "Construyo aplicaciones web escalables con React, Next.js y Node.js: arquitecturas de microfrontends, rendimiento medible e IA integrada en el ciclo de desarrollo.";

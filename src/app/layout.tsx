@@ -51,6 +51,20 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
+      <head>
+        {/*
+          Marca el documento como apto para animar, ANTES del primer paint.
+          El estado oculto del reveal esta scopeado a `.js-motion`, asi que:
+          sin JS, sin IntersectionObserver o con reduced motion, la clase
+          nunca llega y el contenido se ve siempre. Es sincrono a proposito
+          para que no haya parpadeo de visible -> oculto -> animado.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(window.IntersectionObserver&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("js-motion")}}catch(e){}`,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} flex min-h-screen flex-col`}>
         <SiteHeader />
         <main className="flex-1">{children}</main>

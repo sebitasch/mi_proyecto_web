@@ -26,10 +26,10 @@ export function SiteFooter() {
                   {...(isExternal
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 text-muted transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 text-muted transition-colors duration-[var(--dur-1)] ease-out-soft hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
-                  {link.path ? (
-                    <TechIcon path={link.path} className="h-5 w-5" />
+                  {link.iconId ? (
+                    <TechIcon id={link.iconId} className="h-5 w-5" />
                   ) : (
                     // Sin icono disponible: se degrada a texto en vez de
                     // dejar un area clicable invisible.

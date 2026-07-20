@@ -1,3 +1,4 @@
+import { Braces, GitBranch } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
@@ -38,14 +39,20 @@ export default function SobreMiPage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="text-lg font-semibold text-foreground">Experiencia</h2>
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+          <GitBranch className="h-5 w-5 text-accent" aria-hidden="true" />
+          Experiencia
+        </h2>
         <div className="mt-6">
           <ExperienceTimeline />
         </div>
       </section>
 
       <section className="mt-12">
-        <h2 className="text-lg font-semibold text-foreground">Stack</h2>
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+          <Braces className="h-5 w-5 text-accent" aria-hidden="true" />
+          Stack
+        </h2>
         <div className="mt-6">
           <TechStack variant="full" />
         </div>
