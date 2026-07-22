@@ -2,9 +2,9 @@
  * Fondo de red de nodos, comun a todas las rutas.
  *
  * Antes eran figuras sueltas (atomo de React + moleculas). Ahora es una sola
- * red de nodos enlazados: puntos conectados por lineas finas, con algunos
- * nodos "diana" (anillo + nucleo). La identidad se lee por la forma de red,
- * el aire tecnico que buscabamos, sin logotipo ni sprite externo.
+ * red de nodos enlazados: puntos conectados por lineas finas y algunos nodos
+ * "diana" (anillo + nucleo). La identidad se lee por la forma de red, el aire
+ * tecnico que buscabamos, sin logotipo ni sprite externo.
  *
  * Server Component: cero JS y geometria inline. El movimiento lo aportan dos
  * senales que publica <BackdropParallax> en <html>:
@@ -13,8 +13,13 @@
  * Sin JS o con reduced motion ambas valen 0: la red se queda quieta y visible.
  *
  * Se dibuja en capas de distinta profundidad. Cada capa reacciona distinto a
- * las dos senales, y de esa diferencia sale la sensacion de profundidad:
- * las lejanas se mueven poco, las cercanas mas.
+ * las dos senales, y de esa diferencia sale la sensacion de profundidad: las
+ * lejanas se mueven poco, las cercanas mas.
+ *
+ * Las aristas NO se cablean a mano: `connect()` une cada par de nodos cuya
+ * distancia cae bajo un umbral. Asi densificar la red es solo agregar nodos;
+ * el mallado sale organico y triangulado solo. Corre una vez al importar
+ * (server), con posiciones fijas: sin aleatoriedad ni desajuste de hidratacion.
  */
 
 interface Node {
@@ -30,8 +35,8 @@ interface Layer {
   /** Posicion, tinte y visibilidad de la capa. */
   className: string;
   nodes: Node[];
-  /** Pares de indices de `nodes` que van unidos por una linea. */
-  edges: [number, number][];
+  /** Distancia maxima (en unidades del viewBox) para unir dos nodos. */
+  linkDist: number;
   /** Px que deriva al recorrer la pagina entera (scroll). */
   scroll: { dx: number; dy: number };
   /** Px de recorrido a fondo de puntero. `--mx/--my` van de -0.5 a 0.5. */
@@ -42,97 +47,96 @@ interface Layer {
    deformarse; las capas comparten sistema para que la red case entre ellas. */
 const VIEWBOX = "0 0 1440 900";
 
+/** Une cada par de nodos cuya distancia no supere `maxDist`. */
+function connect(nodes: Node[], maxDist: number): [number, number][] {
+  const edges: [number, number][] = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      if (Math.hypot(dx, dy) <= maxDist) edges.push([i, j]);
+    }
+  }
+  return edges;
+}
+
 /* Dos capas y no mas: con mas, la red satura la lectura del contenido. La de
-   atras es tenue y lenta; la de delante, algo mas marcada y con mas recorrido
-   de parallax, para que se despeguen al mover el mouse o hacer scroll. */
+   atras es tenue, densa y lenta; la de delante, mas marcada, mas suelta y con
+   mas recorrido de parallax, para que se despeguen al mover el mouse o scroll. */
 const LAYERS: Layer[] = [
   {
     id: "mesh-back",
     className: "text-accent/[0.06]",
+    linkDist: 240,
     scroll: { dx: -26, dy: 34 },
     pointer: 34,
     nodes: [
-      { x: 90, y: 120, r: 5 },
-      { x: 360, y: 60, r: 4 },
-      { x: 250, y: 280, r: 6, ring: true },
-      { x: 540, y: 180, r: 4 },
-      { x: 470, y: 400, r: 5 },
-      { x: 200, y: 470, r: 4 },
-      { x: 730, y: 100, r: 5 },
-      { x: 690, y: 330, r: 6 },
-      { x: 900, y: 230, r: 4, ring: true },
-      { x: 1080, y: 120, r: 5 },
-      { x: 1010, y: 400, r: 4 },
-      { x: 1260, y: 300, r: 6 },
-      { x: 1180, y: 560, r: 4 },
-      { x: 850, y: 520, r: 5, ring: true },
-      { x: 600, y: 600, r: 4 },
-      { x: 340, y: 660, r: 5 },
-      { x: 1320, y: 560, r: 4 },
-    ],
-    edges: [
-      [0, 1],
-      [0, 2],
-      [1, 2],
-      [1, 3],
-      [2, 3],
-      [2, 4],
-      [2, 5],
-      [3, 4],
-      [4, 5],
-      [3, 6],
-      [6, 7],
-      [3, 7],
-      [7, 8],
-      [6, 8],
-      [8, 9],
-      [9, 10],
-      [8, 10],
-      [10, 11],
-      [11, 12],
-      [10, 13],
-      [7, 13],
-      [13, 14],
-      [4, 14],
-      [14, 15],
-      [5, 15],
-      [12, 16],
-      [11, 16],
-      [13, 12],
+      { x: 80, y: 110, r: 5 },
+      { x: 250, y: 70, r: 4 },
+      { x: 420, y: 130, r: 5, ring: true },
+      { x: 600, y: 80, r: 4 },
+      { x: 770, y: 120, r: 5 },
+      { x: 950, y: 70, r: 4 },
+      { x: 1120, y: 120, r: 5, ring: true },
+      { x: 1300, y: 90, r: 4 },
+      { x: 150, y: 250, r: 4 },
+      { x: 330, y: 290, r: 5 },
+      { x: 500, y: 250, r: 4, ring: true },
+      { x: 680, y: 300, r: 5 },
+      { x: 860, y: 255, r: 4 },
+      { x: 1040, y: 300, r: 5 },
+      { x: 1210, y: 250, r: 4 },
+      { x: 1360, y: 300, r: 5 },
+      { x: 90, y: 440, r: 5 },
+      { x: 270, y: 470, r: 4, ring: true },
+      { x: 450, y: 430, r: 5 },
+      { x: 620, y: 480, r: 4 },
+      { x: 800, y: 440, r: 5 },
+      { x: 980, y: 480, r: 4, ring: true },
+      { x: 1150, y: 440, r: 5 },
+      { x: 1330, y: 470, r: 4 },
+      { x: 170, y: 640, r: 4 },
+      { x: 360, y: 660, r: 5 },
+      { x: 540, y: 630, r: 4 },
+      { x: 720, y: 670, r: 5, ring: true },
+      { x: 900, y: 635, r: 4 },
+      { x: 1080, y: 670, r: 5 },
+      { x: 1260, y: 640, r: 4 },
     ],
   },
   {
     id: "mesh-front",
     className: "hidden text-accent/[0.09] sm:block",
+    linkDist: 330,
     scroll: { dx: 40, dy: -52 },
     pointer: 74,
     nodes: [
-      { x: 180, y: 220, r: 7, ring: true },
-      { x: 430, y: 330, r: 5 },
-      { x: 320, y: 560, r: 6 },
-      { x: 630, y: 180, r: 5 },
-      { x: 780, y: 470, r: 7, ring: true },
-      { x: 980, y: 300, r: 5 },
-      { x: 1180, y: 430, r: 7, ring: true },
-      { x: 1100, y: 660, r: 5 },
-    ],
-    edges: [
-      [0, 1],
-      [1, 2],
-      [1, 3],
-      [3, 4],
-      [4, 5],
-      [5, 6],
-      [4, 2],
-      [1, 4],
-      [6, 7],
-      [4, 7],
+      { x: 180, y: 200, r: 7, ring: true },
+      { x: 400, y: 300, r: 5 },
+      { x: 300, y: 520, r: 6 },
+      { x: 560, y: 180, r: 5 },
+      { x: 720, y: 420, r: 7, ring: true },
+      { x: 900, y: 260, r: 5 },
+      { x: 760, y: 300, r: 4 },
+      { x: 1080, y: 400, r: 7, ring: true },
+      { x: 1240, y: 240, r: 5 },
+      { x: 1180, y: 620, r: 6 },
+      { x: 980, y: 600, r: 5 },
+      { x: 640, y: 600, r: 5, ring: true },
+      { x: 440, y: 640, r: 4 },
+      { x: 1320, y: 480, r: 5 },
     ],
   },
 ];
 
+/** Cada capa con sus aristas ya resueltas por distancia. */
+const RENDERED = LAYERS.map((layer) => ({
+  ...layer,
+  edges: connect(layer.nodes, layer.linkDist),
+}));
+
 /** Dibuja las lineas y los nodos de una capa dentro de su propio SVG. */
-function Mesh({ nodes, edges }: Pick<Layer, "nodes" | "edges">) {
+function Mesh({ nodes, edges }: { nodes: Node[]; edges: [number, number][] }) {
   return (
     <svg
       viewBox={VIEWBOX}
@@ -177,7 +181,7 @@ export function SiteBackdrop() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
-      {LAYERS.map((layer) => (
+      {RENDERED.map((layer) => (
         /* Dos divs anidados a proposito: el de fuera lleva la deriva de scroll
            (sin transicion, sigue al frame) y el de dentro el parallax de
            puntero (con transicion, para que el seguimiento sea suave y no
