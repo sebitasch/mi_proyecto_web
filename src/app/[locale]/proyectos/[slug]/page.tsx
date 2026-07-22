@@ -56,7 +56,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         {project.title}
       </h1>
 
-      <p className="mt-4 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.description}</p>
+      <p className="mt-4 leading-relaxed text-muted text-justify hyphens-auto">{project.description}</p>
 
       <ul className="mt-6 flex flex-wrap gap-2" aria-label={t("technologies")}>
         {project.tags.map((tag) => (
@@ -79,12 +79,12 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
 
       <Reveal as="section" className="mt-12">
         <h2 className="text-lg font-semibold font-display text-foreground">{t("context")}</h2>
-        <p className="mt-3 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.context}</p>
+        <p className="mt-3 leading-relaxed text-muted text-justify hyphens-auto">{project.context}</p>
       </Reveal>
 
       <Reveal as="section" className="mt-10">
         <h2 className="text-lg font-semibold font-display text-foreground">{t("approach")}</h2>
-        <p className="mt-3 leading-relaxed text-muted sm:text-justify sm:hyphens-auto">{project.approach}</p>
+        <p className="mt-3 leading-relaxed text-muted text-justify hyphens-auto">{project.approach}</p>
       </Reveal>
 
       {project.impact.length > 0 && (

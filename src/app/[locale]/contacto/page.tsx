@@ -79,7 +79,7 @@ export default async function ContactoPage({
         {contact.body.map((paragraph) => (
           <p
             key={paragraph}
-            className="leading-relaxed text-muted sm:text-justify sm:hyphens-auto"
+            className="leading-relaxed text-muted text-justify hyphens-auto"
           >
             {paragraph}
           </p>

@@ -33,7 +33,7 @@ export async function ExperienceTimeline() {
             </p>
           )}
 
-          <p className="mt-3 text-sm leading-relaxed text-muted sm:text-justify sm:hyphens-auto">
+          <p className="mt-3 text-sm leading-relaxed text-muted text-justify hyphens-auto">
             {entry.summary}
           </p>
 

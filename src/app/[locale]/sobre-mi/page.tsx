@@ -73,7 +73,7 @@ export default async function SobreMiPage({
 
       <div className="mt-8 flex flex-col gap-4">
         {about.paragraphs.map((paragraph) => (
-          <p key={paragraph} className="leading-relaxed text-muted sm:text-justify sm:hyphens-auto">
+          <p key={paragraph} className="leading-relaxed text-muted text-justify hyphens-auto">
             {paragraph}
           </p>
         ))}

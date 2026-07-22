@@ -86,7 +86,7 @@ export async function ProjectCard({
 
         <p
           className={cn(
-            "leading-relaxed text-muted sm:text-justify sm:hyphens-auto",
+            "leading-relaxed text-muted text-justify hyphens-auto",
             emphasis ? "text-base" : "text-sm",
           )}
         >
