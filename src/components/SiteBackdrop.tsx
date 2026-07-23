@@ -2,9 +2,10 @@
  * Fondo de red de nodos, comun a todas las rutas.
  *
  * Antes eran figuras sueltas (atomo de React + moleculas). Ahora es una sola
- * red de nodos enlazados: puntos conectados por lineas finas y algunos nodos
- * "diana" (anillo + nucleo). La identidad se lee por la forma de red, el aire
- * tecnico que buscabamos, sin logotipo ni sprite externo.
+ * red de nodos enlazados: puntos conectados por lineas finas, nodos "diana"
+ * (anillo + nucleo) y hexagonos en panal con un punto en cada vertice, que
+ * leen como anillos moleculares (tipo benceno). La identidad se lee por la
+ * forma de red, el aire tecnico que buscabamos, sin logotipo ni sprite externo.
  *
  * Server Component: cero JS y geometria inline. El movimiento lo aportan dos
  * senales que publica <BackdropParallax> en <html>:
@@ -30,6 +31,13 @@ interface Node {
   ring?: boolean;
 }
 
+/** Hexagono molecular: centro y radio (centro a vertice). */
+interface Hex {
+  x: number;
+  y: number;
+  r: number;
+}
+
 interface Layer {
   id: string;
   /** Posicion, tinte y visibilidad de la capa. */
@@ -37,6 +45,8 @@ interface Layer {
   nodes: Node[];
   /** Distancia maxima (en unidades del viewBox) para unir dos nodos. */
   linkDist: number;
+  /** Anillos hexagonales (panal molecular). Opcional por capa. */
+  hexes?: Hex[];
   /** Px que deriva al recorrer la pagina entera (scroll). */
   scroll: { dx: number; dy: number };
   /** Px de recorrido a fondo de puntero. `--mx/--my` van de -0.5 a 0.5. */
@@ -46,6 +56,37 @@ interface Layer {
 /* Espacio de coordenadas 1440x900. `slice` lo hace cubrir el viewport sin
    deformarse; las capas comparten sistema para que la red case entre ellas. */
 const VIEWBOX = "0 0 1440 900";
+
+/** Vertices de un hexagono con punta arriba/abajo (pointy-top). */
+function hexVertices(cx: number, cy: number, r: number): [number, number][] {
+  return Array.from({ length: 6 }, (_, i): [number, number] => {
+    const a = (Math.PI / 180) * (60 * i - 90);
+    return [
+      Math.round((cx + r * Math.cos(a)) * 10) / 10,
+      Math.round((cy + r * Math.sin(a)) * 10) / 10,
+    ];
+  });
+}
+
+/**
+ * Un parche de panal: hexagonos que comparten arista, como un anillo
+ * molecular fusionado. `cells` son coordenadas offset (columna, fila); las
+ * filas impares se corren media celda para que encajen sin huecos.
+ */
+function honeycomb(
+  cx: number,
+  cy: number,
+  r: number,
+  cells: [number, number][],
+): Hex[] {
+  const stepX = Math.sqrt(3) * r; // paso horizontal entre centros
+  const stepY = 1.5 * r; // paso vertical entre filas
+  return cells.map(([col, row]) => ({
+    x: cx + col * stepX + (row % 2 !== 0 ? stepX / 2 : 0),
+    y: cy + row * stepY,
+    r,
+  }));
+}
 
 /** Une cada par de nodos cuya distancia no supere `maxDist`. */
 function connect(nodes: Node[], maxDist: number): [number, number][] {
@@ -103,6 +144,20 @@ const LAYERS: Layer[] = [
       { x: 1080, y: 670, r: 5 },
       { x: 1260, y: 640, r: 4 },
     ],
+    // Panal molecular al fondo: un parche arriba a la derecha y otro,
+    // pequeno, abajo a la izquierda, para no cargar el centro del texto.
+    hexes: [
+      ...honeycomb(1170, 150, 30, [
+        [0, 0],
+        [1, 0],
+        [0, 1],
+        [1, 1],
+      ]),
+      ...honeycomb(230, 700, 26, [
+        [0, 0],
+        [1, 0],
+      ]),
+    ],
   },
   {
     id: "mesh-front",
@@ -126,6 +181,12 @@ const LAYERS: Layer[] = [
       { x: 440, y: 640, r: 4 },
       { x: 1320, y: 480, r: 5 },
     ],
+    // Un anillo molecular mas marcado en la capa cercana, lado derecho.
+    hexes: honeycomb(1130, 340, 40, [
+      [0, 0],
+      [0, 1],
+      [1, 1],
+    ]),
   },
 ];
 
@@ -135,8 +196,16 @@ const RENDERED = LAYERS.map((layer) => ({
   edges: connect(layer.nodes, layer.linkDist),
 }));
 
-/** Dibuja las lineas y los nodos de una capa dentro de su propio SVG. */
-function Mesh({ nodes, edges }: { nodes: Node[]; edges: [number, number][] }) {
+/** Dibuja las lineas, los nodos y los hexagonos de una capa en su propio SVG. */
+function Mesh({
+  nodes,
+  edges,
+  hexes,
+}: {
+  nodes: Node[];
+  edges: [number, number][];
+  hexes?: Hex[];
+}) {
   return (
     <svg
       viewBox={VIEWBOX}
@@ -154,6 +223,27 @@ function Mesh({ nodes, edges }: { nodes: Node[]; edges: [number, number][] }) {
           />
         ))}
       </g>
+      {/* Panal molecular: cada hexagono es un anillo con un punto por vertice.
+          Comparten vertices en las aristas fusionadas, como un benceno. */}
+      {hexes?.map((hex, i) => {
+        const v = hexVertices(hex.x, hex.y, hex.r);
+        return (
+          <g key={`hex-${i}`}>
+            <polygon
+              points={v.map(([x, y]) => `${x},${y}`).join(" ")}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeOpacity="0.65"
+            />
+            <g fill="currentColor">
+              {v.map(([x, y], j) => (
+                <circle key={j} cx={x} cy={y} r={2.6} />
+              ))}
+            </g>
+          </g>
+        );
+      })}
       <g fill="currentColor">
         {nodes.map((node, i) => (
           <g key={i}>
@@ -199,7 +289,7 @@ export function SiteBackdrop() {
               transform: `translate3d(calc(var(--mx, 0) * ${layer.pointer}px), calc(var(--my, 0) * ${layer.pointer}px), 0)`,
             }}
           >
-            <Mesh nodes={layer.nodes} edges={layer.edges} />
+            <Mesh nodes={layer.nodes} edges={layer.edges} hexes={layer.hexes} />
           </div>
         </div>
       ))}
