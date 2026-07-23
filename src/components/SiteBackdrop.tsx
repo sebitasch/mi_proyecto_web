@@ -144,24 +144,48 @@ const LAYERS: Layer[] = [
       { x: 1080, y: 670, r: 5 },
       { x: 1260, y: 640, r: 4 },
     ],
-    // Panal molecular al fondo: un parche arriba a la derecha y otro,
-    // pequeno, abajo a la izquierda, para no cargar el centro del texto.
+    // Panal molecular repartido por todo el lienzo. Varios parches caen en la
+    // banda central (x ~520-920): es lo unico que `slice` deja ver en un
+    // telefono en vertical, asi que sin ellos no habria hexagonos en mobile.
     hexes: [
+      ...honeycomb(180, 140, 26, [
+        [0, 0],
+        [1, 0],
+      ]),
+      ...honeycomb(650, 110, 24, [
+        [0, 0],
+        [0, 1],
+      ]),
       ...honeycomb(1170, 150, 30, [
         [0, 0],
         [1, 0],
         [0, 1],
         [1, 1],
       ]),
-      ...honeycomb(230, 700, 26, [
+      ...honeycomb(700, 450, 26, [
         [0, 0],
         [1, 0],
+        [0, 1],
+      ]),
+      ...honeycomb(250, 710, 26, [
+        [0, 0],
+        [1, 0],
+      ]),
+      ...honeycomb(620, 730, 24, [
+        [0, 0],
+        [1, 0],
+      ]),
+      ...honeycomb(1270, 560, 24, [
+        [0, 0],
+        [0, 1],
       ]),
     ],
   },
   {
     id: "mesh-front",
-    className: "hidden text-accent/[0.09] sm:block",
+    // Visible tambien en mobile: `slice` recorta a la banda central, asi que
+    // aqui la capa cercana ya no satura como lo haria a lo ancho completo.
+    className: "text-accent/[0.09]",
     linkDist: 330,
     scroll: { dx: 40, dy: -52 },
     pointer: 74,
@@ -181,12 +205,24 @@ const LAYERS: Layer[] = [
       { x: 440, y: 640, r: 4 },
       { x: 1320, y: 480, r: 5 },
     ],
-    // Un anillo molecular mas marcado en la capa cercana, lado derecho.
-    hexes: honeycomb(1130, 340, 40, [
-      [0, 0],
-      [0, 1],
-      [1, 1],
-    ]),
+    // Anillos moleculares mas marcados en la capa cercana: uno central (que
+    // mobile si alcanza a ver) y dos en los lados para el ancho de escritorio.
+    hexes: [
+      ...honeycomb(770, 300, 34, [
+        [0, 0],
+        [0, 1],
+        [1, 1],
+      ]),
+      ...honeycomb(1130, 360, 40, [
+        [0, 0],
+        [0, 1],
+        [1, 1],
+      ]),
+      ...honeycomb(360, 480, 28, [
+        [0, 0],
+        [1, 0],
+      ]),
+    ],
   },
 ];
 
