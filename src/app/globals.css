@@ -64,6 +64,10 @@
   --animate-scale-in: scale-in var(--dur-3) var(--ease-out-soft) both;
   --animate-wipe-in: wipe-in var(--dur-4) var(--ease-out-soft) both;
   --animate-float: float var(--dur-5) var(--ease-in-out-soft) infinite alternate;
+  /* Deriva ambiental del fondo: cada capa flota sola, sin tocar el mouse. La
+     amplitud la fija `--amp` en el consumidor; duracion y sentido tambien, para
+     que las capas no se muevan en bloque. */
+  --animate-drift: drift 28s var(--ease-in-out-soft) infinite;
 
   @keyframes fade-up {
     from {
@@ -126,6 +130,30 @@
     }
     to {
       transform: translateY(8px);
+    }
+  }
+
+  /* Vagabundeo suave en bucle cerrado (vuelve a 0 al final para no saltar).
+     Los desplazamientos se escalan por `--amp`, asi cada capa deriva mas o
+     menos segun su profundidad. */
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    20% {
+      transform: translate3d(var(--amp, 12px), calc(var(--amp, 12px) * -0.55), 0);
+    }
+    40% {
+      transform: translate3d(calc(var(--amp, 12px) * 0.35), calc(var(--amp, 12px) * 0.85), 0);
+    }
+    60% {
+      transform: translate3d(calc(var(--amp, 12px) * -0.75), calc(var(--amp, 12px) * 0.25), 0);
+    }
+    80% {
+      transform: translate3d(calc(var(--amp, 12px) * -0.4), calc(var(--amp, 12px) * -0.7), 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
     }
   }
 }

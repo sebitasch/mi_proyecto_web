@@ -17,11 +17,18 @@
  * las dos senales, y de esa diferencia sale la sensacion de profundidad: las
  * lejanas se mueven poco, las cercanas mas.
  *
+ * Ademas, cada capa tiene una deriva propia (`animate-drift`) que flota en
+ * bucle sin depender del mouse ni del scroll: la red se mueve sola, tambien en
+ * mobile. Con reduced motion la animacion se detiene (regla global en
+ * globals.css) y todo queda quieto pero visible.
+ *
  * Las aristas NO se cablean a mano: `connect()` une cada par de nodos cuya
  * distancia cae bajo un umbral. Asi densificar la red es solo agregar nodos;
  * el mallado sale organico y triangulado solo. Corre una vez al importar
  * (server), con posiciones fijas: sin aleatoriedad ni desajuste de hidratacion.
  */
+
+import type { CSSProperties } from "react";
 
 interface Node {
   x: number;
@@ -51,6 +58,8 @@ interface Layer {
   scroll: { dx: number; dy: number };
   /** Px de recorrido a fondo de puntero. `--mx/--my` van de -0.5 a 0.5. */
   pointer: number;
+  /** Deriva automatica en bucle: amplitud, duracion y sentido de giro. */
+  drift: { amp: string; dur: string; dir: "normal" | "reverse" };
 }
 
 /* Espacio de coordenadas 1440x900. `slice` lo hace cubrir el viewport sin
@@ -111,6 +120,7 @@ const LAYERS: Layer[] = [
     linkDist: 240,
     scroll: { dx: -26, dy: 34 },
     pointer: 34,
+    drift: { amp: "9px", dur: "34s", dir: "normal" },
     nodes: [
       { x: 80, y: 110, r: 5 },
       { x: 250, y: 70, r: 4 },
@@ -189,6 +199,7 @@ const LAYERS: Layer[] = [
     linkDist: 330,
     scroll: { dx: 40, dy: -52 },
     pointer: 74,
+    drift: { amp: "17px", dur: "24s", dir: "reverse" },
     nodes: [
       { x: 180, y: 200, r: 7, ring: true },
       { x: 400, y: 300, r: 5 },
@@ -325,7 +336,21 @@ export function SiteBackdrop() {
               transform: `translate3d(calc(var(--mx, 0) * ${layer.pointer}px), calc(var(--my, 0) * ${layer.pointer}px), 0)`,
             }}
           >
-            <Mesh nodes={layer.nodes} edges={layer.edges} hexes={layer.hexes} />
+            {/* Tercer div: la deriva automatica en bucle. Va en su propio
+                elemento para no pisar el `transform` de scroll ni el de
+                puntero; los tres se componen al anidarse. */}
+            <div
+              className="animate-drift h-full w-full"
+              style={
+                {
+                  "--amp": layer.drift.amp,
+                  animationDuration: layer.drift.dur,
+                  animationDirection: layer.drift.dir,
+                } as CSSProperties
+              }
+            >
+              <Mesh nodes={layer.nodes} edges={layer.edges} hexes={layer.hexes} />
+            </div>
           </div>
         </div>
       ))}
